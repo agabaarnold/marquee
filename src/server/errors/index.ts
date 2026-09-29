@@ -49,3 +49,13 @@ export class TmdbUnknownError extends TmdbHttpError {
 		this.name = "TmdbUnknownError";
 	}
 }
+
+export class TmdbInvalidPathError extends TmdbHttpError {
+	constructor(path: string) {
+		super(
+			path,
+			`Refusing to send the TMDB credential to a non-TMDB target — pass a relative API path starting with "/": ${path}`
+		);
+		this.name = "TmdbInvalidPathError";
+	}
+}
