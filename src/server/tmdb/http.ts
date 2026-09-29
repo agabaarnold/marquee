@@ -6,6 +6,7 @@ import { serverEnv } from "#/env/server.ts";
 
 import {
 	TmdbAuthError,
+	TmdbInvalidPathError,
 	TmdbNotFoundError,
 	TmdbRateLimitError,
 	TmdbSchemaError,
@@ -34,9 +35,57 @@ const serializeParams = (params: Record<string, unknown>): string => {
 	return search.toString();
 };
 
-const sleep = (ms: number): Promise<void> =>
+/**
+ * Minimal abort surface shared by the DOM `AbortSignal` (`TmdbGetOptions`)
+ * and axios's `GenericAbortSignal` (`AxiosRequestConfig`). A fired-but-stale
+ * listener is harmless: `clearTimeout` on a spent timer and `reject` on a
+ * settled promise are both no-ops.
+ */
+interface AbortAware {
+	readonly aborted: boolean;
+	readonly reason?: unknown;
+	addEventListener?: (
+		type: string,
+		listener: () => void,
+		options?: { once?: boolean }
+	) => void;
+	removeEventListener?: (type: string, listener: () => void) => void;
+}
+
+const sleep = (ms: number, signal?: AbortAware): Promise<void> => {
+	if (signal?.aborted) {
+		return Promise.reject(
+			signal.reason ?? new DOMException("Aborted", "AbortError")
+		);
+	}
+
 	// oxlint-disable-next-line no-promise-executor-return promise/avoid-new
-	new Promise((resolve) => setTimeout(resolve, ms));
+	return new Promise((resolve, reject) => {
+		const timer = setTimeout(resolve, ms);
+		const onAbort = (): void => {
+			clearTimeout(timer);
+			reject(signal?.reason ?? new DOMException("Aborted", "AbortError"));
+		};
+		signal?.addEventListener?.("abort", onAbort, { once: true });
+	});
+};
+
+/**
+ * Absolute `url`s bypass axios's `baseURL` but still carry the instance's
+ * `Authorization` header, so a full URL here would leak the TMDB credential
+ * to another host. Only relative API paths are allowed.
+ */
+const ABSOLUTE_URL_PATTERN = /^[a-zA-Z][a-zA-Z0-9+.-]*:/u;
+
+const assertRelativePath = (path: string): void => {
+	if (
+		!path.startsWith("/") ||
+		path.startsWith("//") ||
+		ABSOLUTE_URL_PATTERN.test(path)
+	) {
+		throw new TmdbInvalidPathError(path);
+	}
+};
 
 export const tmdbHttp: AxiosInstance = create({
 	baseURL: serverEnv.TMDB_BASE_URL,
@@ -68,6 +117,15 @@ const retryDelayMs = (attempt: number, error: AxiosError): number => {
 	return 300 * 2 ** attempt;
 };
 
+// oxlint-disable-next-line anti-slop/no-unknown-parameters
+const isCancelError = (error: unknown, signal?: AbortAware): boolean => {
+	if (signal?.aborted) {
+		return true;
+	}
+
+	return isAxiosError(error) && error.code === "ERR_CANCELED";
+};
+
 const isRetryable = (error: unknown): error is AxiosError => {
 	if (!isAxiosError(error)) {
 		return false;
@@ -91,11 +149,15 @@ const requestWithRetry = async <T>(config: AxiosRequestConfig): Promise<T> => {
 			return response.data;
 		} catch (error) {
 			lastError = error;
-			if (attempt === RETRY_LIMIT || !isRetryable(error)) {
+			if (
+				isCancelError(error, config.signal) ||
+				attempt === RETRY_LIMIT ||
+				!isRetryable(error)
+			) {
 				throw error;
 			}
 			// oxlint-disable-next-line no-await-in-loop -- backoff sleep must complete before the next sequential attempt.
-			await sleep(retryDelayMs(attempt, error));
+			await sleep(retryDelayMs(attempt, error), config.signal);
 		}
 	}
 
@@ -105,6 +167,12 @@ const requestWithRetry = async <T>(config: AxiosRequestConfig): Promise<T> => {
 
 // oxlint-disable-next-line anti-slop/no-unknown-parameters
 const toTmdbError = (error: unknown, path: string): Error => {
+	// Cancellation is caller intent, not a TMDB failure — propagate it
+	// unwrapped so downstream abort checks keep working.
+	if (isAxiosError(error) && error.code === "ERR_CANCELED") {
+		return error;
+	}
+
 	if (!isAxiosError(error)) {
 		return error instanceof Error
 			? error
@@ -136,7 +204,9 @@ export interface TmdbGetOptions {
 /**
  * GET a TMDB endpoint and validate the response against `schema`.
  *
- * @param path   e.g. "/movie/550" (no base URL, no query string)
+ * @param path   e.g. "/movie/550" (no base URL, no query string).
+ *               Absolute URLs are rejected with `TmdbInvalidPathError` so the
+ *               bearer credential can never be sent to another host.
  * @param schema parsed with `safeParse`; a mismatch throws `TmdbSchemaError`
  *               with the input left as `unknown`, TMDB's occasional `null`s
  *               and `""`s can't silently become the wrong type downstream.
@@ -146,6 +216,8 @@ export const tmdbGet = async <S extends z.ZodType>(
 	schema: S,
 	{ params = {}, signal }: TmdbGetOptions = {}
 ): Promise<z.output<S>> => {
+	assertRelativePath(path);
+
 	let raw: unknown;
 	try {
 		raw = await requestWithRetry<unknown>({
