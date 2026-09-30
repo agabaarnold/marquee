@@ -19,8 +19,9 @@ export const MediaFromAny = z
 		r.media_type === "movie" ? toMovieSummary(r) : toTvSummary(r)
 	);
 
-const PersonBranch = z.object({
-	media_type: z.literal("person"),
+// No media_type here: /search/person rows don't carry a discriminator,
+// only /search/multi rows do.
+const PersonRaw = z.object({
 	id: z.number(),
 	name: z.string().default(""),
 	profile_path: imagePath,
@@ -29,8 +30,11 @@ const PersonBranch = z.object({
 		.nullish()
 		.transform((v) => v ?? null),
 });
+const PersonBranch = PersonRaw.extend({
+	media_type: z.literal("person"),
+});
 
-export const PersonResultSchema = PersonBranch.transform((p): SearchResult => ({
+export const PersonResultSchema = PersonRaw.transform((p): SearchResult => ({
 	kind: "person",
 	id: p.id,
 	name: p.name,
