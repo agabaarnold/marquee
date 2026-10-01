@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 
 export type Theme = "light" | "dark" | "system";
 export type ResolvedTheme = "light" | "dark";
@@ -88,4 +88,29 @@ export interface ThemeState {
 export const useTheme = (): ThemeState => {
 	const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 	return { setTheme, theme };
+};
+
+/** Applies the stored/OS theme and keeps it applied across OS and tab changes. */
+export const useThemeLifecycle = (): void => {
+	useEffect(() => {
+		// Re-apply on mount in case the pre-paint script didn't run.
+		applyTheme(resolveTheme(getStoredTheme()));
+		const media = window.matchMedia("(prefers-color-scheme: light)");
+		const onMediaChange = (): void => {
+			applyTheme(resolveTheme(getStoredTheme()));
+		};
+		const onStorage = (event: StorageEvent): void => {
+			if (event.key === STORAGE_KEY && event.newValue !== null) {
+				const next = parseTheme(event.newValue);
+				applyTheme(resolveTheme(next));
+				setThemeState(next);
+			}
+		};
+		media.addEventListener("change", onMediaChange);
+		window.addEventListener("storage", onStorage);
+		return () => {
+			media.removeEventListener("change", onMediaChange);
+			window.removeEventListener("storage", onStorage);
+		};
+	}, []);
 };
