@@ -8,10 +8,13 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
+import Footer from "#/components/layout/footer.tsx";
+import Header from "#/components/layout/header.tsx";
 import {
 	AnchoredToastProvider,
 	ToastProvider,
 } from "#/components/ui/toast.tsx";
+import { useThemeLifecycle } from "#/features/theme/store.ts";
 
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 
@@ -32,7 +35,22 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
-				title: "TanStack Start Starter",
+				name: "theme-color",
+				media: "(prefers-color-scheme: light)",
+				content: "#FAF8F4",
+			},
+			{
+				name: "theme-color",
+				media: "(prefers-color-scheme: dark)",
+				content: "#0B0B10",
+			},
+			{
+				title: "Marquee",
+			},
+			{
+				name: "description",
+				content:
+					"A fast, cinematic, server-rendered discovery site for movies and TV series: browse what's trending, explore by genre and filters, read rich detail pages (cast, trailers, where to watch, seasons and episodes), search everything, and keep a local watchlist",
 			},
 		],
 		links: [
@@ -40,21 +58,48 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				rel: "stylesheet",
 				href: appCss,
 			},
+			{
+				rel: "icon",
+				href: "/favicon.svg",
+				type: "image/svg+xml",
+			},
+			{
+				rel: "icon",
+				href: "/favicon-512.png",
+				type: "image/png",
+				sizes: "512x512",
+			},
+			{
+				rel: "apple-touch-icon",
+				href: "/favicon-180.png",
+				sizes: "180x180",
+			},
+			{
+				rel: "manifest",
+				href: "/site.webmanifest",
+			},
 		],
 	}),
 	shellComponent: RootDocument,
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+	useThemeLifecycle();
 	return (
 		<html lang="en">
 			<head>
+				<script src="/theme-init.js" />
 				<HeadContent />
 			</head>
+
 			<body>
 				<ToastProvider>
 					<AnchoredToastProvider>
-						<main>{children}</main>
+						<Header />
+						<main className="marquee-container flex-1" id="main-content">
+							{children}
+						</main>
+						<Footer />
 					</AnchoredToastProvider>
 				</ToastProvider>
 

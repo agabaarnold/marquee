@@ -34,7 +34,10 @@ export const PosterCard = ({
 		// (or /tv/$tvId) once those routes exist.
 		<Link
 			aria-label={label}
-			className={cn("poster-card group block", className)}
+			className={cn(
+				"poster-card group border-border bg-card block overflow-hidden rounded-xl border",
+				className
+			)}
 			data-media={media.mediaType}
 			to={mediaPath(media)}
 		>
@@ -42,7 +45,7 @@ export const PosterCard = ({
 				{src ? (
 					<img
 						alt=""
-						className="size-full object-cover"
+						className="size-full object-cover transition-transform duration-200 group-focus-within:scale-105 group-hover:scale-105"
 						decoding="async"
 						fetchPriority={priority ? "high" : "auto"}
 						loading={priority ? "eager" : "lazy"}
@@ -74,8 +77,8 @@ export const PosterCard = ({
 				)}
 			</div>
 
-			<div className="mt-2">
-				<p className="text-foreground group-hover:text-primary truncate text-sm font-medium">
+			<div className="px-3 pt-2 pb-3">
+				<p className="text-foreground group-hover:text-primary group-focus-within:text-primary truncate text-sm font-medium">
 					{media.title}
 				</p>
 				{media.year && (
