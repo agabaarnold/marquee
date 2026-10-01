@@ -4,9 +4,9 @@ export const slugify = (text: string): string =>
 	text
 		.toLowerCase()
 		.normalize("NFKD")
-		.replace(/[\u0300-\u036f]/g, "")
-		.replace(/[^a-z0-9]+/g, "-")
-		.replace(/(^-|-$)/g, "");
+		.replaceAll(/[\u0300-\u036F]/gu, "")
+		.replaceAll(/[^a-z0-9]+/gu, "-")
+		.replaceAll(/(?<trim>^-|-$)/gu, "");
 
 /** "550-fight-club" — matches the IdSlugParam shape planned for the detail routes. */
 export const mediaSlugParam = (
