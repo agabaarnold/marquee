@@ -1,4 +1,3 @@
-// oxlint-disable sonarjs(function-name) -- context provider returning children directly; PascalCase is correct for a component.
 import { useEffect } from "react";
 import type { ReactNode } from "react";
 
@@ -35,5 +34,7 @@ const themeProvider = ({ children }: { children: ReactNode }) => {
 	}, []);
 
 	return children;
-}
+};
+
+export { themeProvider as ThemeProvider };
 
