@@ -34,6 +34,16 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
+				name: "theme-color",
+				media: "(prefers-color-scheme: light)",
+				content: "#FAF8F4",
+			},
+			{
+				name: "theme-color",
+				media: "(prefers-color-scheme: dark)",
+				content: "#0B0B10",
+			},
+			{
 				title: "Marquee",
 				description:
 					"A fast, cinematic, server-rendered discovery site for movies and TV series: browse what's trending, explore by genre and filters, read rich detail pages (cast, trailers, where to watch, seasons and episodes), search everything, and keep a local watchlist",
@@ -46,8 +56,23 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			},
 			{
 				rel: "icon",
-				href: "favicon.svg",
+				href: "/favicon.svg",
 				type: "image/svg+xml",
+			},
+			{
+				rel: "icon",
+				href: "/favicon-512.png",
+				type: "image/png",
+				sizes: "512x512",
+			},
+			{
+				rel: "apple-touch-icon",
+				href: "/favicon-180.png",
+				sizes: "180x180",
+			},
+			{
+				rel: "manifest",
+				href: "/site.webmanifest",
 			},
 		],
 	}),
