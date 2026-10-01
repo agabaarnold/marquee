@@ -14,6 +14,7 @@ import {
 	AnchoredToastProvider,
 	ToastProvider,
 } from "#/components/ui/toast.tsx";
+import { ThemeProvider } from "#/features/theme/theme-provider.tsx";
 
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 
@@ -83,19 +84,22 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
 			<head>
+				<script src="/theme-init.js" />
 				<HeadContent />
 			</head>
 
 			<body>
-				<ToastProvider>
-					<AnchoredToastProvider>
-						<Header />
-						<main className="marquee-container flex-1" id="main-content">
-							{children}
-						</main>
-						<Footer />
-					</AnchoredToastProvider>
-				</ToastProvider>
+				<ThemeProvider>
+					<ToastProvider>
+						<AnchoredToastProvider>
+							<Header />
+							<main className="marquee-container flex-1" id="main-content">
+								{children}
+							</main>
+							<Footer />
+						</AnchoredToastProvider>
+					</ToastProvider>
+				</ThemeProvider>
 
 				<TanStackDevtools
 					config={{
