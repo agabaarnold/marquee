@@ -85,11 +85,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<head>
 				<HeadContent />
 			</head>
+
 			<body>
 				<ToastProvider>
 					<AnchoredToastProvider>
 						<Header />
-						<main className="flex-1">{children}</main>
+						<main className="marquee-container flex-1" id="main-content">
+							{children}
+						</main>
 						<Footer />
 					</AnchoredToastProvider>
 				</ToastProvider>
