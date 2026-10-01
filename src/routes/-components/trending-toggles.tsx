@@ -24,7 +24,9 @@ export const TrendingToggles = ({
 			<legend className="sr-only">Time window</legend>
 			<Link
 				aria-current={window === "day" ? "page" : undefined}
-				className={segmentedControlItemVariants({ state: "current" })}
+				className={segmentedControlItemVariants(
+					window === "day" ? { state: "current" } : {}
+				)}
 				from="/"
 				search={(previous) => ({ ...previous, window: "day" })}
 			>
@@ -32,7 +34,9 @@ export const TrendingToggles = ({
 			</Link>
 			<Link
 				aria-current={window === "week" ? "page" : undefined}
-				className={segmentedControlItemVariants({ state: "current" })}
+				className={segmentedControlItemVariants(
+					window === "week" ? { state: "current" } : {}
+				)}
 				from="/"
 				search={(previous) => ({ ...previous, window: "week" })}
 			>
@@ -45,7 +49,9 @@ export const TrendingToggles = ({
 				<Link
 					key={option.value}
 					aria-current={trending === option.value ? "page" : undefined}
-					className={segmentedControlItemVariants({ state: "current" })}
+					className={segmentedControlItemVariants(
+						trending === option.value ? { state: "current" } : {}
+					)}
 					from="/"
 					search={(previous) => ({ ...previous, trending: option.value })}
 				>
