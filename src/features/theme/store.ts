@@ -3,7 +3,7 @@ import { useSyncExternalStore } from "react";
 export type Theme = "light" | "dark" | "system";
 export type ResolvedTheme = "light" | "dark";
 
-const STORAGE_KEY = "marquee:theme";
+export const STORAGE_KEY = "marquee:theme";
 const DEFAULT_THEME: Theme = "system";
 
 export const parseTheme = (raw: string | null): Theme =>
