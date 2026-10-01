@@ -23,7 +23,7 @@ export const GenreChips = ({
 			{shown.map((genre) =>
 				linked ? (
 					<li key={genre.id}>
-						{/* NOTE: swap for <Link to="/discover" search={{ type: mediaType, genres: [genre.id] }} />
+						{/* TODO: swap for <Link to="/discover" search={{ type: mediaType, genres: [genre.id] }} />
 						    once the /discover route exists. */}
 						<Badge
 							render={
