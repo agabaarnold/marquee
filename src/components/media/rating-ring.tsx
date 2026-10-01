@@ -16,10 +16,12 @@ export const RatingRing = ({
 	size?: keyof typeof SIZE_CLASS;
 	className?: string;
 }) => {
-	const pct = Math.max(0, Math.min(100, Math.round(value * 10)));
+	// Guard against non-finite input: NaN would poison the gradient and label.
+	const safeValue = Number.isFinite(value) ? value : 0;
+	const pct = Math.max(0, Math.min(100, Math.round(safeValue * 10)));
 	const label = votes
-		? `${value.toFixed(1)} out of 10, ${votes.toLocaleString()} votes`
-		: `${value.toFixed(1)} out of 10`;
+		? `${safeValue.toFixed(1)} out of 10, ${votes.toLocaleString()} votes`
+		: `${safeValue.toFixed(1)} out of 10`;
 
 	return (
 		<div
@@ -39,7 +41,7 @@ export const RatingRing = ({
 				aria-hidden="true"
 				className="bg-card text-foreground absolute inset-0.5 flex items-center justify-center rounded-full text-[10px] font-semibold tabular-nums"
 			>
-				{value > 0 ? value.toFixed(1) : "—"}
+				{safeValue > 0 ? safeValue.toFixed(1) : "—"}
 			</div>
 		</div>
 	);
