@@ -4,12 +4,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { z } from "zod";
 
-import { GenreChips } from "#/components/media/genre-chips.tsx";
 import { MediaRail } from "#/components/media/media-rail.tsx";
 import { imageUrl } from "#/lib/images.ts";
 import { genresQuery, listQuery, trendingQuery } from "#/queries/media.ts";
 import { TimeWindow } from "#/schemas/common.ts";
 
+import {
+	GenreShortcuts,
+	GenreShortcutsSkeleton,
+} from "./-components/genre-shortcuts.tsx";
 import { Hero } from "./-components/hero.tsx";
 import { HomePending } from "./-components/home-pending.tsx";
 import { ListRail } from "./-components/list-rail.tsx";
@@ -80,7 +83,6 @@ function Home() {
 	const { data: trending } = useSuspenseQuery(
 		trendingQuery(search.trending, search.window)
 	);
-	const { data: genres } = useSuspenseQuery(genresQuery("movie"));
 
 	return (
 		<div className="marquee-container page-transition space-y-10 py-8">
@@ -127,12 +129,9 @@ function Home() {
 				/>
 			</Suspense>
 
-			<section aria-label="Browse by genre" className="space-y-3">
-				<h2 className="font-heading text-foreground text-xl">
-					Browse by genre
-				</h2>
-				<GenreChips genres={genres.slice(0, 8)} mediaType="movie" />
-			</section>
+			<Suspense fallback={<GenreShortcutsSkeleton />}>
+				<GenreShortcuts />
+			</Suspense>
 		</div>
 	);
 }
