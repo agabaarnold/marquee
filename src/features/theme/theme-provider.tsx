@@ -1,3 +1,4 @@
+// oxlint-disable react/function-component-definition func-style
 import { useEffect } from "react";
 import type { ReactNode } from "react";
 
@@ -10,7 +11,7 @@ import {
 	STORAGE_KEY,
 } from "./store";
 
-const themeProvider = ({ children }: { children: ReactNode }) => {
+export function ThemeProvider({ children }: { children: ReactNode }) {
 	useEffect(() => {
 		// Re-apply on mount in case the pre-paint script didn't run.
 		applyTheme(resolveTheme(getStoredTheme()));
@@ -34,7 +35,5 @@ const themeProvider = ({ children }: { children: ReactNode }) => {
 	}, []);
 
 	return children;
-};
-
-export { themeProvider as ThemeProvider };
+}
 
