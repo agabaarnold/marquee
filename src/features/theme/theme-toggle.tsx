@@ -23,7 +23,6 @@ export const ThemeToggle = ({ className }: { className?: string }) => {
 			onClick={() => {
 				setTheme(next);
 			}}
-			title={label}
 			type="button"
 		>
 			<Icon aria-hidden="true" className="size-4" />
