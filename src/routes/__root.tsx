@@ -46,7 +46,10 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			},
 			{
 				title: "Marquee",
-				description:
+			},
+			{
+				name: "description",
+				content:
 					"A fast, cinematic, server-rendered discovery site for movies and TV series: browse what's trending, explore by genre and filters, read rich detail pages (cast, trailers, where to watch, seasons and episodes), search everything, and keep a local watchlist",
 			},
 		],
