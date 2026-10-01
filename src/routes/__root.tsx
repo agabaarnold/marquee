@@ -93,17 +93,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			</head>
 
 			<body>
-				<ThemeProvider>
-					<ToastProvider>
-						<AnchoredToastProvider>
-							<Header />
-							<main className="marquee-container flex-1" id="main-content">
-								{children}
-							</main>
-							<Footer />
-						</AnchoredToastProvider>
-					</ToastProvider>
-				</ThemeProvider>
+				<ToastProvider>
+					<AnchoredToastProvider>
+						<Header />
+						<main className="marquee-container flex-1" id="main-content">
+							{children}
+						</main>
+						<Footer />
+					</AnchoredToastProvider>
+				</ToastProvider>
 
 				<TanStackDevtools
 					config={{
