@@ -14,7 +14,7 @@ import {
 	AnchoredToastProvider,
 	ToastProvider,
 } from "#/components/ui/toast.tsx";
-import { ThemeProvider } from "#/features/theme/theme-provider.tsx";
+import { useThemeLifecycle } from "#/features/theme/store.ts";
 
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 
@@ -84,6 +84,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+	useThemeLifecycle();
 	return (
 		<html lang="en">
 			<head>
