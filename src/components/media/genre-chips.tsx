@@ -13,7 +13,7 @@ export const GenreChips = ({
 	/** Set false to render plain, non-interactive chips (e.g. inside another link). */
 	linked?: boolean;
 }) => {
-	const shown = limit ? genres.slice(0, limit) : genres;
+	const shown = limit === undefined ? genres : genres.slice(0, limit);
 	if (shown.length === 0) {
 		return null;
 	}
@@ -23,7 +23,7 @@ export const GenreChips = ({
 			{shown.map((genre) =>
 				linked ? (
 					<li key={genre.id}>
-						{/* TODO: swap for <Link to="/discover" search={{ type: mediaType, genres: [genre.id] }} />
+						{/* NOTE: swap for <Link to="/discover" search={{ type: mediaType, genres: [genre.id] }} />
 						    once the /discover route exists. */}
 						<Badge
 							render={
