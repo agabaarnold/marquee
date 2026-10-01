@@ -7,9 +7,8 @@ import {
 	parseTheme,
 	resolveTheme,
 	setThemeState,
+	STORAGE_KEY,
 } from "./store";
-
-const STORAGE_KEY = "marquee:theme";
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 	useEffect(() => {
