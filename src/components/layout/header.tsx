@@ -6,7 +6,7 @@ import { Logo } from "#/components/brand/logo.tsx";
 import { ThemeToggle } from "#/features/theme/theme-toggle.tsx";
 
 const NAV: { label: string; href: string }[] = [
-	{ label: "Movies", href: "/movie" },
+	{ label: "Movies", href: "/movies" },
 	{ label: "TV", href: "/tv" },
 	{ label: "Discover", href: "/discover" },
 ];
