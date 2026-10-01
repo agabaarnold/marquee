@@ -5,7 +5,7 @@ import { Search } from "lucide-react";
 import { Logo } from "#/components/brand/logo.tsx";
 
 const NAV: { label: string; href: string }[] = [
-	{ label: "Movies", href: "/movies" },
+	{ label: "Movies", href: "/movie" },
 	{ label: "TV", href: "/tv" },
 	{ label: "Discover", href: "/discover" },
 ];
