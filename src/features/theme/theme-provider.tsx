@@ -10,6 +10,7 @@ import {
 	STORAGE_KEY,
 } from "./store";
 
+// oxlint-disable-next-line sonarjs(function-name) -- context provider returning children directly; PascalCase is correct for a component.
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 	useEffect(() => {
 		// Re-apply on mount in case the pre-paint script didn't run.
