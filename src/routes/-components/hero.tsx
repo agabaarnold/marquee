@@ -104,7 +104,7 @@ export const Hero = ({
 				key={`${media.mediaType}-${media.id}`}
 				className="page-transition relative flex min-h-80 flex-col justify-end gap-3 p-6 sm:p-8"
 			>
-				<MediaTypeBadge mediaType={media.mediaType} />
+				<MediaTypeBadge className="self-start" mediaType={media.mediaType} />
 				<h1 className="font-heading max-w-3xl text-4xl text-white sm:text-5xl">
 					{media.title}
 				</h1>
