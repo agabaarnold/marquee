@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 
 import { Logo } from "#/components/brand/logo.tsx";
+import { ThemeToggle } from "#/features/theme/theme-toggle.tsx";
 
 const NAV: { label: string; href: string }[] = [
 	{ label: "Movies", href: "/movie" },
@@ -56,7 +57,7 @@ const Header = () => (
 					</kbd>
 				</Link>
 
-				{/* NOTE: theme toggle mounts here once features/theme lands. */}
+				<ThemeToggle className="text-muted-foreground hover:text-foreground border-border flex size-8 items-center justify-center rounded-full border" />
 				{/* NOTE: watchlist count mounts here once features/watchlist lands. */}
 			</div>
 		</div>
