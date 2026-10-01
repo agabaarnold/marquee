@@ -8,6 +8,8 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
+import Footer from "#/components/layout/footer.tsx";
+import Header from "#/components/layout/header.tsx";
 import {
 	AnchoredToastProvider,
 	ToastProvider,
@@ -32,13 +34,20 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
-				title: "TanStack Start Starter",
+				title: "Marquee",
+				description:
+					"A fast, cinematic, server-rendered discovery site for movies and TV series: browse what's trending, explore by genre and filters, read rich detail pages (cast, trailers, where to watch, seasons and episodes), search everything, and keep a local watchlist",
 			},
 		],
 		links: [
 			{
 				rel: "stylesheet",
 				href: appCss,
+			},
+			{
+				rel: "icon",
+				href: "favicon.svg",
+				type: "image/svg+xml",
 			},
 		],
 	}),
@@ -54,7 +63,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<body>
 				<ToastProvider>
 					<AnchoredToastProvider>
-						<main>{children}</main>
+						<Header />
+						<main className="flex-1">{children}</main>
+						<Footer />
 					</AnchoredToastProvider>
 				</ToastProvider>
 
