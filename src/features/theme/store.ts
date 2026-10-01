@@ -80,7 +80,12 @@ export const setTheme = (theme: Theme): void => {
 	setThemeState(theme);
 };
 
-export const useTheme = (): { theme: Theme; setTheme: typeof setTheme } => {
+export interface ThemeState {
+	theme: Theme;
+	setTheme: (theme: Theme) => void;
+}
+
+export const useTheme = (): ThemeState => {
 	const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 	return { setTheme, theme };
 };
