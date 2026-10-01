@@ -19,6 +19,7 @@ export const RatingRing = ({
 	// Guard against non-finite input: NaN would poison the gradient and label.
 	const safeValue = Number.isFinite(value) ? value : 0;
 	const pct = Math.max(0, Math.min(100, Math.round(safeValue * 10)));
+	// A zero or missing vote count carries no information, so both omit it.
 	const label = votes
 		? `${safeValue.toFixed(1)} out of 10, ${votes.toLocaleString()} votes`
 		: `${safeValue.toFixed(1)} out of 10`;
