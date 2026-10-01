@@ -81,11 +81,10 @@ function Home() {
 		trendingQuery(search.trending, search.window)
 	);
 	const { data: genres } = useSuspenseQuery(genresQuery("movie"));
-	const [hero] = trending.results;
 
 	return (
 		<div className="marquee-container page-transition space-y-10 py-8">
-			{hero && <Hero media={hero} />}
+			<Hero items={trending.results} />
 
 			<section aria-label="Trending" className="space-y-3">
 				<TrendingToggles trending={search.trending} window={search.window} />
