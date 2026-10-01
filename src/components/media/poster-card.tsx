@@ -22,7 +22,12 @@ export const PosterCard = ({
 	className?: string;
 }) => {
 	const src = imageUrl(media.posterPath, 342);
-	const label = media.year ? `${media.title} (${media.year})` : media.title;
+	// The badge text is replaced by this label for assistive technology,
+	// so the media type goes here to tell movies and series apart.
+	const kind = media.mediaType === "movie" ? "Movie" : "Series";
+	const label = media.year
+		? `${media.title} (${media.year}), ${kind}`
+		: `${media.title}, ${kind}`;
 
 	return (
 		// NOTE: swap for <Link to="/movie/$movieId" params={{ movieId: mediaSlugParam(media) }} />
