@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 import { Badge } from "#/components/ui/badge.tsx";
 import type { Genre, MediaType } from "#/schemas/common.ts";
 
@@ -20,16 +22,19 @@ export const GenreChips = ({
 
 	return (
 		<ul className="flex flex-wrap gap-1.5">
-			{shown.map((genre) =>
-				linked ? (
+			{shown.map((genre) => {
+				// oxlint-disable-next-line typescript/no-inferrable-types -- widened on purpose: the route doesn't exist yet, keeping Link's to typechecked as an unchecked string.
+				const pathname: string = "/discover";
+				return linked ? (
 					<li key={genre.id}>
-						{/* NOTE: swap for <Link to="/discover" search={{ type: mediaType, genres: [genre.id] }} />
-						    once the /discover route exists. */}
 						<Badge
 							render={
-								<a href={`/discover?type=${mediaType}&genres=${genre.id}`}>
+								<Link
+									search={{ genres: [genre.id], type: mediaType }}
+									to={pathname}
+								>
 									{genre.name}
-								</a>
+								</Link>
 							}
 							variant="outline"
 						/>
@@ -38,8 +43,8 @@ export const GenreChips = ({
 					<li key={genre.id}>
 						<Badge variant="outline">{genre.name}</Badge>
 					</li>
-				)
-			)}
+				);
+			})}
 		</ul>
 	);
 };
