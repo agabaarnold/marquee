@@ -80,11 +80,6 @@ const getSnapshot = (): StoredState => {
 	if (snapshot === null) {
 		snapshot = readStored();
 	}
-	// eslint-disable-next-line no-console -- temporary e2e debug probe
-	if (snapshotReads < 30) {
-		snapshotReads += 1;
-		console.log("[watchlist] getSnapshot items:", snapshot.items.length);
-	}
 	return snapshot;
 };
 
@@ -92,11 +87,6 @@ const getServerSnapshot = (): StoredState => SERVER_SNAPSHOT;
 
 const subscribe = (listener: () => void): (() => void) => {
 	listeners.add(listener);
-	// eslint-disable-next-line no-console -- temporary e2e debug probe
-	console.log(
-		"[watchlist] subscribe",
-		new Error().stack?.split("\n").slice(2, 6).join(" | ")
-	);
 	return () => {
 		listeners.delete(listener);
 	};
@@ -105,8 +95,6 @@ const subscribe = (listener: () => void): (() => void) => {
 const commit = (next: StoredState): void => {
 	snapshot = next;
 	persist(next);
-	// eslint-disable-next-line no-console -- temporary e2e debug probe
-	console.log("[watchlist] commit items:", next.items.length, "listeners:", listeners.size);
 	for (const listener of listeners) {
 		listener();
 	}
