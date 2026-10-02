@@ -1,7 +1,8 @@
 import { useSyncExternalStore } from "react";
 
 import type { MediaType } from "#/schemas/common.ts";
-import { WatchlistState, type WatchlistItem } from "#/schemas/watchlist.ts";
+import type { WatchlistItem } from "#/schemas/watchlist.ts";
+import { WatchlistState } from "#/schemas/watchlist.ts";
 
 const STORAGE_KEY = "marquee:watchlist:v1";
 const BACKUP_KEY = "marquee:watchlist:backup";
@@ -24,7 +25,10 @@ export interface Watchlist {
 	) => void;
 }
 
-type StoredState = { version: 1; items: WatchlistItem[] };
+interface StoredState {
+	version: 1;
+	items: WatchlistItem[];
+}
 
 const emptyState = (): StoredState => ({ items: [], version: 1 });
 
