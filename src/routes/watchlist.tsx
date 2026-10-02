@@ -9,13 +9,13 @@ import {
 	EmptyHeader,
 	EmptyTitle,
 } from "#/components/ui/empty.tsx";
+import { useWatchlist } from "#/features/watchlist/store.ts";
+import { imageUrl } from "#/lib/images.ts";
 import {
 	segmentedControlItemVariants,
 	segmentedControlRootClassName,
 } from "#/lib/segmented-control.ts";
-import { imageUrl } from "#/lib/images.ts";
 import { mediaPath } from "#/lib/slug.ts";
-import { useWatchlist } from "#/features/watchlist/store.ts";
 import type { MediaType } from "#/schemas/common.ts";
 import type { WatchlistItem } from "#/schemas/watchlist.ts";
 
@@ -95,7 +95,7 @@ function WatchlistRow({ item }: { item: WatchlistItem }) {
 				</div>
 				<div className="flex flex-wrap gap-2 pt-1">
 					<button
-						className="text-muted-foreground hover:text-foreground rounded-full border border-border px-3 py-1 text-xs"
+						className="text-muted-foreground hover:text-foreground border-border rounded-full border px-3 py-1 text-xs"
 						onClick={() => {
 							setStatus(item.mediaType, item.id, NEXT_STATUS[status]);
 						}}
@@ -105,7 +105,7 @@ function WatchlistRow({ item }: { item: WatchlistItem }) {
 					</button>
 					<button
 						aria-label={`Remove ${item.title} from watchlist`}
-						className="text-muted-foreground hover:text-foreground rounded-full border border-border p-1.5"
+						className="text-muted-foreground hover:text-foreground border-border rounded-full border p-1.5"
 						onClick={() => {
 							remove(item.mediaType, item.id);
 						}}
@@ -148,8 +148,8 @@ function WatchlistPage() {
 					<EmptyHeader>
 						<EmptyTitle>Nothing saved yet</EmptyTitle>
 						<EmptyDescription>
-							Save movies and series to find them here, stored privately in
-							this browser.
+							Save movies and series to find them here, stored privately in this
+							browser.
 						</EmptyDescription>
 					</EmptyHeader>
 				</Empty>
@@ -211,7 +211,10 @@ function WatchlistPage() {
 					) : (
 						<ul className="grid gap-3 sm:grid-cols-2">
 							{visible.map((item) => (
-								<WatchlistRow key={`${item.mediaType}-${item.id}`} item={item} />
+								<WatchlistRow
+									key={`${item.mediaType}-${item.id}`}
+									item={item}
+								/>
 							))}
 						</ul>
 					)}
