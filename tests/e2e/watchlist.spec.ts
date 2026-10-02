@@ -3,14 +3,15 @@ import { expect, test } from "@playwright/test";
 test("save from a detail page, header count, watchlist page, persistence", async ({
 	page,
 }) => {
-	// Client hydration (not just SSR HTML) must finish before clicking:
-	// pre-hydration clicks land on inert markup and toggle nothing.
+	// The save button is SSR-rendered before React hydrates, so a click
+	// that lands too early toggles nothing. The root sets
+	// data-hydrated on <html> once the client mounts.
 	await page.goto("/movie/550");
-	await page.waitForLoadState("networkidle");
-	await page.getByRole("button", { name: "Watchlist", exact: true }).click();
-	await expect(page.getByRole("button", { name: "Saved" })).toBeVisible({
-		timeout: 15_000,
+	await expect(page.locator("html[data-hydrated='true']")).toBeAttached({
+		timeout: 30_000,
 	});
+	await page.getByRole("button", { name: "Watchlist", exact: true }).click();
+	await expect(page.getByRole("button", { name: "Saved" })).toBeVisible();
 	await expect(
 		page.getByRole("link", { name: "Watchlist, 1 saved" })
 	).toBeVisible();
