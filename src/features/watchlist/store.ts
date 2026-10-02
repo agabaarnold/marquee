@@ -55,7 +55,12 @@ const readStored = (): StoredState => {
 	} catch {
 		if (raw) {
 			try {
-				window.localStorage.setItem(BACKUP_KEY, raw);
+				// Write-once: later persist calls overwrite STORAGE_KEY with
+				// fallback-derived state, so the backup is the only copy of
+				// the original data and must not be replaced by repeats.
+				if (window.localStorage.getItem(BACKUP_KEY) === null) {
+					window.localStorage.setItem(BACKUP_KEY, raw);
+				}
 			} catch {
 				// Backup failing must not block starting clean.
 			}
@@ -160,7 +165,9 @@ export const setSavedStatus = (
 
 if (typeof window !== "undefined") {
 	window.addEventListener("storage", (event) => {
-		if (event.key === STORAGE_KEY) {
+		// A null key means localStorage.clear() in another tab: drop stale
+		// state instead of writing it back on the next commit.
+		if (event.key === STORAGE_KEY || event.key === null) {
 			snapshot = readStored();
 			for (const listener of listeners) {
 				listener();
