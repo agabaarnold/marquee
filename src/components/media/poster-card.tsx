@@ -3,6 +3,7 @@ import { cn } from "cn";
 
 import { MediaTypeBadge } from "#/components/media/media-type-badge.tsx";
 import { RatingRing } from "#/components/media/rating-ring.tsx";
+import { WatchlistButton } from "#/features/watchlist/watchlist-button.tsx";
 import { imageSrcSet, imageUrl } from "#/lib/images.ts";
 import { mediaPath } from "#/lib/slug.ts";
 import type { MediaSummary } from "#/types/media.ts";
@@ -12,6 +13,7 @@ export const PosterCard = ({
 	priority = false,
 	showRating = true,
 	showBadge = true,
+	showWatchlist = true,
 	className,
 }: {
 	media: MediaSummary;
@@ -19,6 +21,7 @@ export const PosterCard = ({
 	priority?: boolean;
 	showRating?: boolean;
 	showBadge?: boolean;
+	showWatchlist?: boolean;
 	className?: string;
 }) => {
 	const src = imageUrl(media.posterPath, 342);
@@ -65,6 +68,12 @@ export const PosterCard = ({
 					<MediaTypeBadge
 						className="absolute top-2 left-2"
 						mediaType={media.mediaType}
+					/>
+				)}
+				{showWatchlist && (
+					<WatchlistButton
+						className="absolute top-2 right-2 rounded-full bg-black/55 p-1.5 text-white backdrop-blur-sm"
+						media={media}
 					/>
 				)}
 				{showRating && media.rating > 0 && (
