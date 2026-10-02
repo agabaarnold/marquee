@@ -10,7 +10,7 @@ const BACKUP_KEY = "marquee:watchlist:backup";
 export type WatchlistInput = Pick<
 	WatchlistItem,
 	"mediaType" | "id" | "title" | "posterPath" | "year"
-> & { status?: WatchlistItem["status"] };
+>;
 
 export interface Watchlist {
 	items: WatchlistItem[];
@@ -124,9 +124,13 @@ export const toggleSaved = (input: WatchlistInput): void => {
 		items: [
 			...state.items,
 			{
-				...input,
+				mediaType: input.mediaType,
+				id: input.id,
+				title: input.title,
+				posterPath: input.posterPath,
+				year: input.year,
 				addedAt: new Date().toISOString(),
-				status: input.status ?? "planned",
+				status: "planned",
 			},
 		],
 	});
