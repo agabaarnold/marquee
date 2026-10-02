@@ -51,6 +51,13 @@
 	--color-input: var(--border);
 	--color-foreground: var(--text);
 	--color-destructive: var(--danger);
+	--color-destructive-foreground: var(--danger-foreground);
+	--color-success: var(--success);
+	--color-success-foreground: var(--success-foreground);
+	--color-warning: var(--warning);
+	--color-warning-foreground: var(--warning-foreground);
+	--color-info: var(--info);
+	--color-info-foreground: var(--info-foreground);
 	--color-card-foreground: var(--card-foreground);
 	--color-card: var(--surface);
 	--color-border: var(--border);
@@ -181,6 +188,10 @@
 	--danger-foreground: oklch(0.16 0.015 285);
 	--success: oklch(0.8003 0.1821 151.7);
 	--success-foreground: oklch(0.16 0.015 285);
+	--warning: var(--movie);
+	--warning-foreground: var(--movie-foreground);
+	--info: var(--tv);
+	--info-foreground: var(--tv-foreground);
 
 	--accent: var(--movie);
 	--accent-foreground: var(--movie-foreground);
@@ -245,6 +256,10 @@
 	--danger-foreground: oklch(0.985 0.004 85);
 	--success: oklch(0.6163 0.1519 152.2);
 	--success-foreground: oklch(0.985 0.004 85);
+	--warning: var(--movie);
+	--warning-foreground: var(--movie-foreground);
+	--info: var(--tv);
+	--info-foreground: var(--tv-foreground);
 
 	--accent: var(--movie);
 	--accent-foreground: var(--movie-foreground);

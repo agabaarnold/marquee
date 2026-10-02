@@ -12,6 +12,7 @@ import {
 	AvatarImage,
 } from "#/components/ui/avatar.tsx";
 import { Skeleton } from "#/components/ui/skeleton.tsx";
+import { WatchlistButton } from "#/features/watchlist/watchlist-button.tsx";
 import { imageUrl } from "#/lib/images.ts";
 import { mediaSlugParam, slugify } from "#/lib/slug.ts";
 import { movieQuery } from "#/queries/media.ts";
@@ -161,6 +162,13 @@ function MoviePage() {
 							</p>
 						)}
 						<GenreChips genres={movie.genres} mediaType="movie" />
+						<div>
+							<WatchlistButton
+								className="bg-primary text-primary-foreground inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium"
+								media={movie}
+								variant="full"
+							/>
+						</div>
 					</div>
 				</div>
 			</section>

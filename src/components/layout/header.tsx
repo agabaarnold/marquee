@@ -1,9 +1,10 @@
 // oxlint-disable github/a11y-no-visually-hidden-interactive-element -- skip link: intentionally hidden until focused, the standard accessible pattern; focus:not-sr-only reveals it to sighted keyboard users.
 import { Link } from "@tanstack/react-router";
-import { Search } from "lucide-react";
+import { Bookmark, Search } from "lucide-react";
 
 import { Logo } from "#/components/brand/logo.tsx";
 import { ThemeToggle } from "#/features/theme/theme-toggle.tsx";
+import { useWatchlist } from "#/features/watchlist/store.ts";
 
 const NAV: { label: string; href: string }[] = [
 	{ label: "Movies", href: "/movies" },
@@ -12,6 +13,24 @@ const NAV: { label: string; href: string }[] = [
 ];
 // oxlint-disable-next-line typescript/no-inferrable-types -- widened on purpose: the route doesn't exist yet, keeping Link's to typechecked as an unchecked string.
 const SEARCH_HREF: string = "/search";
+
+const WatchlistCount = () => {
+	const { count } = useWatchlist();
+	return (
+		<Link
+			aria-label={count === 0 ? "Watchlist" : `Watchlist, ${count} saved`}
+			className="text-muted-foreground hover:text-foreground border-border relative flex size-8 items-center justify-center rounded-full border"
+			to="/watchlist"
+		>
+			<Bookmark aria-hidden="true" className="size-4" />
+			{count > 0 && (
+				<span className="bg-primary text-primary-foreground absolute -top-1 -right-1 flex min-h-5 min-w-5 items-center justify-center rounded-full px-1 text-xs font-semibold">
+					{count > 99 ? "99+" : count}
+				</span>
+			)}
+		</Link>
+	);
+};
 
 const Header = () => (
 	<header className="bg-background/80 border-border sticky top-0 z-50 border-b backdrop-blur">
@@ -58,7 +77,7 @@ const Header = () => (
 				</Link>
 
 				<ThemeToggle className="text-muted-foreground hover:text-foreground border-border flex size-8 items-center justify-center rounded-full border" />
-				{/* NOTE: watchlist count mounts here once features/watchlist lands. */}
+				<WatchlistCount />
 			</div>
 		</div>
 	</header>
