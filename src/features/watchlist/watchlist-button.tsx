@@ -28,8 +28,6 @@ export const WatchlistButton = ({
 }) => {
 	const { isSaved } = useWatchlist();
 	const saved = isSaved(media.mediaType, media.id);
-	// eslint-disable-next-line no-console -- temporary e2e debug probe
-	console.log("[watchlist] render", media.id, saved);
 	const label = saved
 		? `Remove ${media.title} from watchlist`
 		: `Save ${media.title} to watchlist`;
