@@ -2,8 +2,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
-import { MediaGrid } from "#/components/media/media-grid.tsx";
 import { MediaGridSkeleton } from "#/components/media/media-grid-skeleton.tsx";
+import { MediaGrid } from "#/components/media/media-grid.tsx";
 import { Skeleton } from "#/components/ui/skeleton.tsx";
 import { imageUrl } from "#/lib/images.ts";
 import { personQuery } from "#/queries/person.ts";
@@ -33,7 +33,9 @@ export const Route = createFileRoute("/person/$personId")({
 	},
 	head: ({ loaderData }) => ({
 		meta: [
-			{ title: loaderData ? `${loaderData.name} · Marquee` : "Person · Marquee" },
+			{
+				title: loaderData ? `${loaderData.name} · Marquee` : "Person · Marquee",
+			},
 			...(loaderData?.description
 				? [{ name: "description", content: loaderData.description }]
 				: []),
@@ -89,11 +91,7 @@ function PersonPage() {
 				<div className="flex flex-col gap-6 sm:flex-row">
 					<div className="w-40 shrink-0 sm:w-52">
 						{profile ? (
-							<img
-								alt={person.name}
-								className="poster w-full"
-								src={profile}
-							/>
+							<img alt={person.name} className="poster w-full" src={profile} />
 						) : (
 							<div className="bg-muted poster flex items-center justify-center p-3 text-center">
 								<span className="font-heading text-muted-foreground text-lg leading-tight">
@@ -114,7 +112,9 @@ function PersonPage() {
 							{person.placeOfBirth && <span>{person.placeOfBirth}</span>}
 						</div>
 						{person.biography && (
-							<p className="max-w-3xl whitespace-pre-line">{person.biography}</p>
+							<p className="max-w-3xl whitespace-pre-line">
+								{person.biography}
+							</p>
 						)}
 					</div>
 				</div>
