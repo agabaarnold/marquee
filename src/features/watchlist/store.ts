@@ -86,6 +86,8 @@ const getServerSnapshot = (): StoredState => SERVER_SNAPSHOT;
 
 const subscribe = (listener: () => void): (() => void) => {
 	listeners.add(listener);
+	// eslint-disable-next-line no-console -- temporary e2e debug probe
+	console.log("[watchlist] subscribe, total:", listeners.size);
 	return () => {
 		listeners.delete(listener);
 	};
@@ -94,6 +96,8 @@ const subscribe = (listener: () => void): (() => void) => {
 const commit = (next: StoredState): void => {
 	snapshot = next;
 	persist(next);
+	// eslint-disable-next-line no-console -- temporary e2e debug probe
+	console.log("[watchlist] commit, listeners:", listeners.size);
 	for (const listener of listeners) {
 		listener();
 	}
