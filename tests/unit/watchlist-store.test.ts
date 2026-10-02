@@ -27,7 +27,7 @@ describe("watchlist store", () => {
 		store.toggleSaved(item);
 		expect(store.isSaved("movie", 550)).toBe(true);
 		const raw = window.localStorage.getItem("marquee:watchlist:v1");
-	 expect(JSON.parse(raw ?? "{}").items[0]).toMatchObject({
+		expect(JSON.parse(raw ?? "{}").items[0]).toMatchObject({
 			status: "planned",
 			title: "Fight Club",
 		});
@@ -60,7 +60,7 @@ describe("watchlist store", () => {
 		act(() => {
 			result.current.setStatus("movie", 550, "watched");
 		});
-	 expect(
+		expect(
 			result.current.items.find((entry) => entry.mediaType === "movie")?.status
 		).toBe("watched");
 
