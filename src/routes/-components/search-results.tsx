@@ -12,8 +12,8 @@ import {
 import { imageUrl } from "#/lib/images.ts";
 import { searchHref } from "#/lib/search-params.ts";
 import { searchQuery } from "#/queries/search.ts";
-import type { SearchQueryType } from "#/server/functions/search.ts";
 import type { SearchPageSearch } from "#/schemas/discover.ts";
+import type { SearchQueryType } from "#/server/functions/search.ts";
 
 type SearchUiType = z.infer<typeof SearchPageSearch>["type"];
 
