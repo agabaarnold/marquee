@@ -6,12 +6,12 @@ import { GenreChips } from "#/components/media/genre-chips.tsx";
 import { MediaRail } from "#/components/media/media-rail.tsx";
 import { MediaTypeBadge } from "#/components/media/media-type-badge.tsx";
 import { RatingRing } from "#/components/media/rating-ring.tsx";
-import { Skeleton } from "#/components/ui/skeleton.tsx";
 import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
 } from "#/components/ui/avatar.tsx";
+import { Skeleton } from "#/components/ui/skeleton.tsx";
 import { imageUrl } from "#/lib/images.ts";
 import { mediaSlugParam, slugify } from "#/lib/slug.ts";
 import { movieQuery } from "#/queries/media.ts";
@@ -52,7 +52,11 @@ export const Route = createFileRoute("/movie/$movieId")({
 			: undefined;
 		return {
 			meta: [
-				{ title: loaderData ? `${loaderData.title} · Marquee` : "Movie · Marquee" },
+				{
+					title: loaderData
+						? `${loaderData.title} · Marquee`
+						: "Movie · Marquee",
+				},
 				...(loaderData?.description
 					? [{ name: "description", content: loaderData.description }]
 					: []),
@@ -100,36 +104,48 @@ function MoviePage() {
 	const backdrop = imageUrl(movie.backdropPath, 1280);
 	const poster = imageUrl(movie.posterPath, 342);
 	const directors = movie.directors.map((person) => person.name).join(", ");
+	const titleTone = backdrop ? "text-white" : "text-foreground";
+	const dimTone = backdrop ? "text-white/70" : "text-muted-foreground";
+	const bodyTone = backdrop ? "text-white/90" : undefined;
 
 	return (
 		<div className="marquee-container page-transition space-y-8 py-8">
-			<section aria-label={movie.title} className="space-y-6">
+			<section
+				aria-label={movie.title}
+				className="relative overflow-hidden rounded-xl"
+			>
 				{backdrop && (
-					<div className="overflow-hidden rounded-xl">
-						<img
-							alt=""
-							className="aspect-video w-full object-cover"
-							src={backdrop}
-						/>
-					</div>
+					<img
+						alt=""
+						className="absolute inset-0 size-full object-cover"
+						src={backdrop}
+					/>
 				)}
-				<div className="flex flex-col gap-6 sm:flex-row">
+				{backdrop && (
+					<div
+						aria-hidden="true"
+						className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/25"
+					/>
+				)}
+				<div className="relative flex flex-col gap-6 p-6 sm:flex-row sm:p-8">
 					{poster && (
 						<img
 							alt={`Poster for ${movie.title}`}
-							className="poster w-40 shrink-0 sm:w-52"
+							className="poster w-40 shrink-0 shadow-2xl sm:w-52"
 							src={poster}
 						/>
 					)}
 					<div className="min-w-0 flex-1 space-y-3">
 						<MediaTypeBadge mediaType="movie" />
-						<h1 className="font-heading text-foreground text-3xl sm:text-4xl">
+						<h1 className={`font-heading text-3xl sm:text-4xl ${titleTone}`}>
 							{movie.title}
 						</h1>
 						{movie.tagline && (
-							<p className="text-muted-foreground italic">{movie.tagline}</p>
+							<p className={`${dimTone} italic`}>{movie.tagline}</p>
 						)}
-						<div className="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+						<div
+							className={`${dimTone} flex flex-wrap items-center gap-x-3 gap-y-1 text-sm`}
+						>
 							{movie.year && <span>{movie.year}</span>}
 							{movie.runtimeMinutes !== null && (
 								<span>{movie.runtimeMinutes} min</span>
@@ -137,11 +153,11 @@ function MoviePage() {
 							{movie.certification && <span>{movie.certification}</span>}
 							<RatingRing value={movie.rating} votes={movie.voteCount} />
 						</div>
-						{movie.overview && <p>{movie.overview}</p>}
+						{movie.overview && <p className={bodyTone}>{movie.overview}</p>}
 						{directors && (
 							<p className="text-sm">
-								<span className="text-muted-foreground">Directed by </span>
-								{directors}
+								<span className={dimTone}>Directed by </span>
+								<span className={bodyTone}>{directors}</span>
 							</p>
 						)}
 						<GenreChips genres={movie.genres} mediaType="movie" />
