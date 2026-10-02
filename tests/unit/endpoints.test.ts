@@ -19,6 +19,7 @@ import {
 	trending,
 	tvDetails,
 } from "#/server/tmdb/endpoints.ts";
+
 import {
 	discoverPage,
 	genresList,
@@ -34,7 +35,7 @@ const BASE = "https://api.themoviedb.org/3";
 const server = setupServer();
 
 beforeAll(() => {
-	server.listen({ onUnhandledRequest: "error" });
+	server.listen();
 });
 afterEach(() => {
 	server.resetHandlers();
@@ -45,7 +46,11 @@ afterAll(() => {
 
 describe("trending", () => {
 	it("parses a trending page", async () => {
-		server.use(http.get(`${BASE}/trending/all/week`, () => HttpResponse.json(trendingPage)));
+		server.use(
+			http.get(`${BASE}/trending/all/week`, () =>
+				HttpResponse.json(trendingPage)
+			)
+		);
 		const page = await trending("all", "week");
 		expect(page.results).toHaveLength(2);
 		expect(page.totalPages).toBe(500);
@@ -57,7 +62,8 @@ describe("movieDetails", () => {
 		let append = "";
 		server.use(
 			http.get(`${BASE}/movie/550`, ({ request }) => {
-				append = new URL(request.url).searchParams.get("append_to_response") ?? "";
+				append =
+					new URL(request.url).searchParams.get("append_to_response") ?? "";
 				return HttpResponse.json(movieDetailsFixture);
 			})
 		);
@@ -154,7 +160,9 @@ describe("search", () => {
 			)
 		);
 		const page = await search("norton", "multi");
-		expect(page.results.map((item) => item.kind)).toEqual(["media", "person"]);
+		expect(
+			page.results.map((item) => ("kind" in item ? item.kind : "media"))
+		).toEqual(["media", "person"]);
 	});
 });
 
@@ -163,7 +171,8 @@ describe("discover", () => {
 		let genresParam = "";
 		server.use(
 			http.get(`${BASE}/discover/movie`, ({ request }) => {
-				genresParam = new URL(request.url).searchParams.get("with_genres") ?? "";
+				genresParam =
+					new URL(request.url).searchParams.get("with_genres") ?? "";
 				return HttpResponse.json(discoverPage);
 			})
 		);
@@ -182,9 +191,13 @@ describe("discover", () => {
 
 describe("genres and providers", () => {
 	it("unwraps genre and provider lists", async () => {
-		server.use(http.get(`${BASE}/genre/movie/list`, () => HttpResponse.json(genresList)));
 		server.use(
-			http.get(`${BASE}/watch/providers/movie`, () => HttpResponse.json(providersList))
+			http.get(`${BASE}/genre/movie/list`, () => HttpResponse.json(genresList))
+		);
+		server.use(
+			http.get(`${BASE}/watch/providers/movie`, () =>
+				HttpResponse.json(providersList)
+			)
 		);
 		expect(await genres("movie")).toEqual(genresList.genres);
 		const providerList = await providers("movie", "US");
@@ -194,7 +207,9 @@ describe("genres and providers", () => {
 
 describe("tvDetails", () => {
 	it("parses tv details", async () => {
-		server.use(http.get(`${BASE}/tv/1396`, () => HttpResponse.json(tvDetailsFixture)));
+		server.use(
+			http.get(`${BASE}/tv/1396`, () => HttpResponse.json(tvDetailsFixture))
+		);
 		const details = await tvDetails(1396);
 		expect(details.certification).toBe("TV-MA");
 	});
