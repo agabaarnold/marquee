@@ -1,6 +1,6 @@
-import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 // oxlint-disable react/function-component-definition func-style
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 
 import { MediaGridSkeleton } from "#/components/media/media-grid-skeleton.tsx";
 import {
