@@ -4,6 +4,8 @@ import type { TmdbGetOptions } from "#/server/tmdb/http.ts";
 
 import { MediaType } from "./common";
 
+const POPULARITY_DESC = "popularity.desc" as const;
+
 // oxlint-disable-next-line no-redeclare -- Zod idiom: the schema value and its inferred type share a name.
 export const DiscoverSearch = z.object({
 	type: MediaType.default("movie"),
@@ -18,12 +20,12 @@ export const DiscoverSearch = z.object({
 	minRating: z.number().min(0).max(10).default(0),
 	sort: z
 		.enum([
-			"popularity.desc",
+			POPULARITY_DESC,
 			"vote_average.desc",
 			"primary_release_date.desc",
 			"revenue.desc",
 		])
-		.default("popularity.desc"),
+		.default(POPULARITY_DESC),
 	providers: z.array(z.number()).default([]),
 	region: z.string().length(2).optional(),
 	page: z.number().int().min(1).max(500).default(1),
@@ -61,7 +63,7 @@ type DiscoverSort = DiscoverSearch["sort"];
 // revenue sorting is movie-only; remap tv-incompatible values.
 const tvSort = (sort: DiscoverSort): string => {
 	if (sort === "revenue.desc") {
-		return "popularity.desc";
+		return POPULARITY_DESC;
 	}
 	return sort.replace("primary_release_date", "first_air_date");
 };
