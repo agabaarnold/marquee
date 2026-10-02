@@ -6,6 +6,7 @@ import { z } from "zod";
 import { MediaGridSkeleton } from "#/components/media/media-grid-skeleton.tsx";
 import { MediaGrid } from "#/components/media/media-grid.tsx";
 import { PaginationNav } from "#/components/navigation/pagination-nav.tsx";
+import { searchHref } from "#/lib/search-params.ts";
 import {
 	segmentedControlItemVariants,
 	segmentedControlRootClassName,
@@ -95,7 +96,7 @@ function MoviesHub() {
 			/>
 			<PaginationNav
 				hrefForPage={(next) =>
-					`/movies?category=${search.category}&page=${next}`
+					searchHref("/movies", { category: search.category, page: next })
 				}
 				page={data.page}
 				totalPages={data.totalPages}
