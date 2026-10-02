@@ -7,11 +7,8 @@ import {
 	PersonResultSchema,
 	SearchResultSchema,
 } from "#/schemas/search.ts";
-import {
-	personDetails,
-	searchMultiPage,
-	trendingPage,
-} from "../fixtures/tmdb";
+
+import { personDetails, searchMultiPage, trendingPage } from "../fixtures/tmdb";
 
 describe("MediaFromAny", () => {
 	it("parses mixed trending pages, dropping person and malformed rows", () => {
