@@ -77,6 +77,7 @@ function SearchPage() {
 			<h1 className="font-heading text-foreground text-3xl">Search</h1>
 			<form
 				className="flex max-w-xl gap-2"
+				key={search.q}
 				onSubmit={(event) => {
 					event.preventDefault();
 					void navigate({
