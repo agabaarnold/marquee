@@ -1,18 +1,19 @@
-// oxlint-disable react/function-component-definition func-style
-import { Suspense } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
+// oxlint-disable react/function-component-definition func-style
+import { Suspense } from "react";
 
-import { MediaGrid } from "#/components/media/media-grid.tsx";
 import { MediaGridSkeleton } from "#/components/media/media-grid-skeleton.tsx";
+import { MediaGrid } from "#/components/media/media-grid.tsx";
 import { PaginationNav } from "#/components/navigation/pagination-nav.tsx";
+import { searchHref } from "#/lib/search-params.ts";
 import {
 	segmentedControlItemVariants,
 	segmentedControlRootClassName,
 } from "#/lib/segmented-control.ts";
-import { searchHref } from "#/lib/search-params.ts";
 import { discoverQuery } from "#/queries/media.ts";
 import { DiscoverSearch } from "#/schemas/discover.ts";
+
 import {
 	DiscoverGenres,
 	DiscoverProviders,
@@ -50,7 +51,8 @@ export const Route = createFileRoute("/discover")({
 			{ title: "Discover · Marquee" },
 			{
 				name: "description",
-				content: "Filter movies and series by genre, year, rating, and provider.",
+				content:
+					"Filter movies and series by genre, year, rating, and provider.",
 			},
 		],
 	}),
