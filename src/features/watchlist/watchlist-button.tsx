@@ -1,7 +1,15 @@
 import { Bookmark, BookmarkCheck } from "lucide-react";
+import type { MouseEvent } from "react";
 
 import { toggleSaved, useWatchlist } from "./store";
 import type { WatchlistInput } from "./store";
+
+const onToggle = (event: MouseEvent, media: WatchlistInput): void => {
+	// Safe inside card links: never follow the ancestor anchor.
+	event.preventDefault();
+	event.stopPropagation();
+	toggleSaved(media);
+};
 
 export const WatchlistButton = ({
 	media,
@@ -24,8 +32,8 @@ export const WatchlistButton = ({
 			<button
 				aria-pressed={saved}
 				className={className}
-				onClick={() => {
-					toggleSaved(media);
+				onClick={(event) => {
+					onToggle(event, media);
 				}}
 				type="button"
 			>
@@ -40,8 +48,8 @@ export const WatchlistButton = ({
 			aria-label={label}
 			aria-pressed={saved}
 			className={className}
-			onClick={() => {
-				toggleSaved(media);
+			onClick={(event) => {
+				onToggle(event, media);
 			}}
 			type="button"
 		>
