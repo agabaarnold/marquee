@@ -13,7 +13,7 @@ const media = {
 } as const;
 
 const loadButton = () =>
-	import("#/features/watchlist/WatchlistButton.tsx");
+	import("#/features/watchlist/watchlist-button.tsx");
 
 beforeEach(() => {
 	vi.resetModules();
