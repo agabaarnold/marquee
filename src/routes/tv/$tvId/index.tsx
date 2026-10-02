@@ -11,13 +11,13 @@ import { GenreChips } from "#/components/media/genre-chips.tsx";
 import { MediaRail } from "#/components/media/media-rail.tsx";
 import { MediaTypeBadge } from "#/components/media/media-type-badge.tsx";
 import { RatingRing } from "#/components/media/rating-ring.tsx";
-import { WatchlistButton } from "#/features/watchlist/watchlist-button.tsx";
 import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
 } from "#/components/ui/avatar.tsx";
 import { Skeleton } from "#/components/ui/skeleton.tsx";
+import { WatchlistButton } from "#/features/watchlist/watchlist-button.tsx";
 import { imageUrl } from "#/lib/images.ts";
 import { mediaSlugParam, slugify } from "#/lib/slug.ts";
 import { tvQuery } from "#/queries/media.ts";
