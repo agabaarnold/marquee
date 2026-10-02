@@ -2,9 +2,14 @@ import { Bookmark, BookmarkCheck } from "lucide-react";
 import type { MouseEvent } from "react";
 
 import { toggleSaved, useWatchlist } from "./store";
-import type { WatchlistInput } from "./store";
+import type { MediaSummary } from "#/types/media.ts";
 
-const onToggle = (event: MouseEvent, media: WatchlistInput): void => {
+type WatchlistMedia = Pick<
+	MediaSummary,
+	"mediaType" | "id" | "title" | "posterPath" | "year"
+>;
+
+const onToggle = (event: MouseEvent, media: WatchlistMedia): void => {
 	// Safe inside card links: never follow the ancestor anchor.
 	event.preventDefault();
 	event.stopPropagation();
@@ -16,7 +21,7 @@ export const WatchlistButton = ({
 	variant = "icon",
 	className,
 }: {
-	media: WatchlistInput;
+	media: WatchlistMedia;
 	variant?: "icon" | "full";
 	className?: string;
 }) => {
