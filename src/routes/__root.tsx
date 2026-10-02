@@ -7,6 +7,7 @@ import {
 	createRootRouteWithContext,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { useEffect } from "react";
 
 import Footer from "#/components/layout/footer.tsx";
 import Header from "#/components/layout/header.tsx";
@@ -85,8 +86,14 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
 	useThemeLifecycle();
+	useEffect(() => {
+		// Marks client hydration: SSR HTML lacks this attribute, so e2e
+		// tests can wait for interactivity instead of guessing.
+		document.documentElement.dataset.hydrated = "true";
+	}, []);
+	
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<head>
 				<script src="/theme-init.js" />
 				<HeadContent />
