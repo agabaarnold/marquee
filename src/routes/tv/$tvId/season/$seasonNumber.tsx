@@ -88,6 +88,7 @@ function SeasonPage() {
 	const { data: show } = useSuspenseQuery(tvQuery(showId));
 	const { data: season } = useSuspenseQuery(seasonQuery(showId, seasonNumber));
 	const poster = imageUrl(season.posterPath, 342);
+	// oxlint-disable-next-line typescript/no-inferrable-types -- widened on purpose: the route doesn't exist yet, keeping Link's to typechecked as an unchecked string.
 	const showHref: string = `/tv/${mediaSlugParam(show)}`;
 
 	return (
@@ -126,6 +127,7 @@ function SeasonPage() {
 			{show.seasons.length > 1 && (
 				<nav aria-label="Seasons" className="flex flex-wrap gap-2">
 					{show.seasons.map((item) => {
+						// oxlint-disable-next-line typescript/no-inferrable-types -- widened on purpose: the route doesn't exist yet, keeping Link's to typechecked as an unchecked string.
 						const href: string = `/tv/${mediaSlugParam(show)}/season/${item.seasonNumber}`;
 						const current = item.seasonNumber === season.seasonNumber;
 						return (
