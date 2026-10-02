@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
 import { ThemeToggle } from "#/features/theme/theme-toggle.tsx";
+
 import { renderWithRouter } from "./router";
 
 describe("ThemeToggle", () => {
