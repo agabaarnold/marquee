@@ -28,9 +28,9 @@ describe("PaginationNav", () => {
 		expect(
 			within(nav).getByRole("link", { name: "500" })
 		).toBeInTheDocument();
-		expect(within(nav).queryByRole("link", { name: "Previous" })).not.toBeInTheDocument();
+		expect(within(nav).queryByRole("link", { name: "Go to previous page" })).not.toBeInTheDocument();
 		expect(
-			within(nav).getByRole("link", { name: "Next" })
+			within(nav).getByRole("link", { name: "Go to next page" })
 		).toBeInTheDocument();
 	});
 
@@ -40,10 +40,10 @@ describe("PaginationNav", () => {
 		);
 		const nav = screen.getByRole("navigation", { name: "pagination" });
 		expect(
-			within(nav).getByRole("link", { name: "Previous" })
+			within(nav).getByRole("link", { name: "Go to previous page" })
 		).toHaveAttribute("href", "/movies?page=249");
 		expect(
-			within(nav).getByRole("link", { name: "Next" })
+			within(nav).getByRole("link", { name: "Go to next page" })
 		).toHaveAttribute("href", "/movies?page=251");
 	});
 });
