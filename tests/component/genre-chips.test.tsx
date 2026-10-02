@@ -21,10 +21,14 @@ describe("GenreChips", () => {
 	});
 
 	it("renders nothing for an empty list or a zero limit", async () => {
-		const { container } = await renderWithRouter(
+		const empty = await renderWithRouter(
+			<GenreChips genres={[]} mediaType="movie" />
+		);
+		expect(empty.container).toBeEmptyDOMElement();
+		const zeroLimit = await renderWithRouter(
 			<GenreChips genres={genres} limit={0} mediaType="movie" />
 		);
-		expect(container).toBeEmptyDOMElement();
+		expect(zeroLimit.container).toBeEmptyDOMElement();
 	});
 
 	it("renders plain chips when unlinked", async () => {
