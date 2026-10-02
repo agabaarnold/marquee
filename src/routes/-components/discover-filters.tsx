@@ -94,6 +94,8 @@ export const DiscoverGenres = ({
 	);
 };
 
+const PROVIDER_COUNT = 12;
+
 export const DiscoverProviders = ({
 	mediaType,
 	region,
@@ -104,10 +106,14 @@ export const DiscoverProviders = ({
 	active: number[];
 }) => {
 	const { data } = useSuspenseQuery(providersQuery(mediaType, region));
+	const [showAll, setShowAll] = useState(false);
 	const activeSet = new Set(active);
+	// oxlint-disable-next-line unicorn/no-array-sort -- sorting a fresh copy; nothing else observes it.
+	const ranked = [...data.results].sort((a, b) => a.priority - b.priority);
+	const visible = showAll ? ranked : ranked.slice(0, PROVIDER_COUNT);
 	return (
 		<FilterGroup label="Streaming providers">
-			{data.results.map((provider) => (
+			{visible.map((provider) => (
 				<FilterChip
 					key={provider.id}
 					active={activeSet.has(provider.id)}
@@ -120,6 +126,17 @@ export const DiscoverProviders = ({
 					{provider.name}
 				</FilterChip>
 			))}
+			{ranked.length > PROVIDER_COUNT && (
+				<button
+					className="text-muted-foreground hover:text-foreground text-sm underline underline-offset-2"
+					onClick={() => {
+						setShowAll((value) => !value);
+					}}
+					type="button"
+				>
+					{showAll ? "Show fewer" : `Show all ${ranked.length} providers`}
+				</button>
+			)}
 		</FilterGroup>
 	);
 };
