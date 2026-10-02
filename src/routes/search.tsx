@@ -16,8 +16,8 @@ import {
 import { searchQuery } from "#/queries/search.ts";
 import { SearchPageSearch } from "#/schemas/discover.ts";
 
-import { SearchResults } from "./-components/search-results.tsx";
 import { SearchForm } from "./-components/search-form.tsx";
+import { SearchResults } from "./-components/search-results.tsx";
 
 const TYPES = [
 	{ value: "all", label: "All" },
