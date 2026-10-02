@@ -93,15 +93,14 @@ function SeasonPage() {
 	const { data: show } = useSuspenseQuery(tvQuery(showId));
 	const { data: season } = useSuspenseQuery(seasonQuery(showId, seasonNumber));
 	const poster = imageUrl(season.posterPath, 342);
-	// oxlint-disable-next-line typescript/no-inferrable-types -- widened on purpose: the route doesn't exist yet, keeping Link's to typechecked as an unchecked string.
-	const showHref: string = `/tv/${mediaSlugParam(show)}`;
 
 	return (
 		<div className="marquee-container page-transition space-y-8 py-8">
 			<section aria-label={`${season.name} of ${show.title}`}>
 				<Link
 					className="text-muted-foreground hover:text-foreground text-sm"
-					to={showHref}
+					params={{ tvId: mediaSlugParam(show) }}
+					to="/tv/$tvId"
 				>
 					← {show.title}
 				</Link>
@@ -132,8 +131,6 @@ function SeasonPage() {
 			{show.seasons.length > 1 && (
 				<nav aria-label="Seasons" className="flex flex-wrap gap-2">
 					{show.seasons.map((item) => {
-						// oxlint-disable-next-line typescript/no-inferrable-types -- widened on purpose: the route doesn't exist yet, keeping Link's to typechecked as an unchecked string.
-						const href: string = `/tv/${mediaSlugParam(show)}/season/${item.seasonNumber}`;
 						const current = item.seasonNumber === season.seasonNumber;
 						return (
 							<Link
@@ -144,7 +141,11 @@ function SeasonPage() {
 										? "bg-primary text-primary-foreground rounded-full px-4 py-1.5 text-sm font-medium"
 										: "text-muted-foreground hover:text-foreground border-border rounded-full border px-4 py-1.5 text-sm"
 								}
-								to={href}
+								params={{
+									seasonNumber: `${item.seasonNumber}`,
+									tvId: mediaSlugParam(show),
+								}}
+								to="/tv/$tvId/season/$seasonNumber"
 							>
 								{item.seasonNumber === 0
 									? "Specials"
