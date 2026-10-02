@@ -51,6 +51,7 @@ describe("IdSlugParam", () => {
 describe("SeasonParam", () => {
 	it("coerces numeric strings with a default", () => {
 		expect(SeasonParam.parse("2")).toBe(2);
+		// oxlint-disable-next-line unicorn/no-useless-undefined -- explicitly exercising the .default() path for missing input.
 		expect(SeasonParam.parse(undefined)).toBe(1);
 	});
 });
