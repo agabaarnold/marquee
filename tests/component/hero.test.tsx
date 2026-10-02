@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { Hero } from "#/routes/-components/hero.tsx";
 import type { MediaSummary } from "#/types/media.ts";
+
 import { renderWithRouter } from "./router";
 
 const makeMedia = (id: number, title: string): MediaSummary => ({
@@ -40,7 +41,9 @@ describe("Hero", () => {
 
 	it("advances slides on dot clicks", async () => {
 		await renderWithRouter(<Hero items={items} />);
-		expect(screen.getAllByRole("button", { name: /Show slide/ })).toHaveLength(2);
+		expect(screen.getAllByRole("button", { name: /Show slide/u })).toHaveLength(
+			2
+		);
 		expect(screen.getByRole("heading", { name: "One" })).toBeInTheDocument();
 
 		fireEvent.click(screen.getByRole("button", { name: "Show slide 2: Two" }));
