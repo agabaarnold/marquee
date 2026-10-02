@@ -56,6 +56,16 @@ export const SeasonParam = z.coerce.number().int().min(0).max(200).default(1);
 
 type DiscoverParams = NonNullable<TmdbGetOptions["params"]>;
 
+type DiscoverSort = DiscoverSearch["sort"];
+
+// revenue sorting is movie-only; remap tv-incompatible values.
+const tvSort = (sort: DiscoverSort): string => {
+	if (sort === "revenue.desc") {
+		return "popularity.desc";
+	}
+	return sort.replace("primary_release_date", "first_air_date");
+};
+
 // Map typed filter state to TMDB discover names, handling the movie/TV
 // differences (date keys, tv-incompatible sort values, provider region).
 export const toDiscoverParams = (
@@ -66,10 +76,7 @@ export const toDiscoverParams = (
 	const params: DiscoverParams = {
 		page: s.page,
 		include_adult: false,
-		sort_by:
-			t === "tv"
-				? s.sort.replace("primary_release_date", "first_air_date")
-				: s.sort,
+		sort_by: t === "tv" ? tvSort(s.sort) : s.sort,
 	};
 	if (s.genres.length > 0) {
 		params.with_genres = s.genres.join(",");
