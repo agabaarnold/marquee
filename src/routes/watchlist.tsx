@@ -201,8 +201,9 @@ function WatchlistPage() {
 								<WatchlistRow key={`${item.mediaType}-${item.id}`} item={item} />
 							))}
 						</ul>
-					</div>
-				)}
-			</div>
-		);
-	}
+					)}
+				</div>
+			)}
+		</div>
+	);
+}
