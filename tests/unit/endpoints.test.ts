@@ -104,8 +104,8 @@ describe("movieDetails", () => {
 });
 
 describe("list", () => {
-	it("rejects unknown categories without a request", async () => {
-		await expect(list("movie", "nope")).rejects.toThrow();
+	it("rejects unknown categories without a request", () => {
+		expect(() => list("movie", "nope")).toThrow();
 	});
 });
 
@@ -126,9 +126,9 @@ describe("season", () => {
 				})
 			)
 		);
-		const season = await season(1396, 1);
-		expect(season.showId).toBe(1396);
-		expect(season.seasonNumber).toBe(1);
+		const result = await season(1396, 1);
+		expect(result.showId).toBe(1396);
+		expect(result.seasonNumber).toBe(1);
 	});
 });
 
