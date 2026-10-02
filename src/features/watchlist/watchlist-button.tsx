@@ -1,6 +1,7 @@
 import { Bookmark, BookmarkCheck } from "lucide-react";
 
-import { toggleSaved, useWatchlist, type WatchlistInput } from "./store";
+import { toggleSaved, useWatchlist } from "./store";
+import type { WatchlistInput } from "./store";
 
 export const WatchlistButton = ({
 	media,
