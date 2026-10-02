@@ -10,33 +10,168 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as DiscoverRouteImport } from './routes/discover'
+import { Route as MoviesRouteImport } from './routes/movies'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as WatchlistRouteImport } from './routes/watchlist'
+import { Route as MovieMovieIdRouteImport } from './routes/movie/$movieId'
+import { Route as PersonPersonIdRouteImport } from './routes/person/$personId'
+import { Route as TvIndexRouteImport } from './routes/tv/index'
+import { Route as TvTvIdIndexRouteImport } from './routes/tv/$tvId/index'
+import { Route as TvTvIdSeasonSeasonNumberRouteImport } from './routes/tv/$tvId/season/$seasonNumber'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DiscoverRoute = DiscoverRouteImport.update({
+  id: '/discover',
+  path: '/discover',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoviesRoute = MoviesRouteImport.update({
+  id: '/movies',
+  path: '/movies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WatchlistRoute = WatchlistRouteImport.update({
+  id: '/watchlist',
+  path: '/watchlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MovieMovieIdRoute = MovieMovieIdRouteImport.update({
+  id: '/movie/$movieId',
+  path: '/movie/$movieId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersonPersonIdRoute = PersonPersonIdRouteImport.update({
+  id: '/person/$personId',
+  path: '/person/$personId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TvIndexRoute = TvIndexRouteImport.update({
+  id: '/tv/',
+  path: '/tv/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TvTvIdIndexRoute = TvTvIdIndexRouteImport.update({
+  id: '/tv/$tvId/',
+  path: '/tv/$tvId/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TvTvIdSeasonSeasonNumberRoute =
+  TvTvIdSeasonSeasonNumberRouteImport.update({
+    id: '/tv/$tvId/season/$seasonNumber',
+    path: '/tv/$tvId/season/$seasonNumber',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/discover': typeof DiscoverRoute
+  '/movies': typeof MoviesRoute
+  '/search': typeof SearchRoute
+  '/watchlist': typeof WatchlistRoute
+  '/movie/$movieId': typeof MovieMovieIdRoute
+  '/person/$personId': typeof PersonPersonIdRoute
+  '/tv/': typeof TvIndexRoute
+  '/tv/$tvId/': typeof TvTvIdIndexRoute
+  '/tv/$tvId/season/$seasonNumber': typeof TvTvIdSeasonSeasonNumberRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/discover': typeof DiscoverRoute
+  '/movies': typeof MoviesRoute
+  '/search': typeof SearchRoute
+  '/watchlist': typeof WatchlistRoute
+  '/movie/$movieId': typeof MovieMovieIdRoute
+  '/person/$personId': typeof PersonPersonIdRoute
+  '/tv': typeof TvIndexRoute
+  '/tv/$tvId': typeof TvTvIdIndexRoute
+  '/tv/$tvId/season/$seasonNumber': typeof TvTvIdSeasonSeasonNumberRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/discover': typeof DiscoverRoute
+  '/movies': typeof MoviesRoute
+  '/search': typeof SearchRoute
+  '/watchlist': typeof WatchlistRoute
+  '/movie/$movieId': typeof MovieMovieIdRoute
+  '/person/$personId': typeof PersonPersonIdRoute
+  '/tv/': typeof TvIndexRoute
+  '/tv/$tvId/': typeof TvTvIdIndexRoute
+  '/tv/$tvId/season/$seasonNumber': typeof TvTvIdSeasonSeasonNumberRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/discover'
+    | '/movies'
+    | '/search'
+    | '/watchlist'
+    | '/movie/$movieId'
+    | '/person/$personId'
+    | '/tv/'
+    | '/tv/$tvId/'
+    | '/tv/$tvId/season/$seasonNumber'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/discover'
+    | '/movies'
+    | '/search'
+    | '/watchlist'
+    | '/movie/$movieId'
+    | '/person/$personId'
+    | '/tv'
+    | '/tv/$tvId'
+    | '/tv/$tvId/season/$seasonNumber'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/discover'
+    | '/movies'
+    | '/search'
+    | '/watchlist'
+    | '/movie/$movieId'
+    | '/person/$personId'
+    | '/tv/'
+    | '/tv/$tvId/'
+    | '/tv/$tvId/season/$seasonNumber'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  DiscoverRoute: typeof DiscoverRoute
+  MoviesRoute: typeof MoviesRoute
+  SearchRoute: typeof SearchRoute
+  WatchlistRoute: typeof WatchlistRoute
+  MovieMovieIdRoute: typeof MovieMovieIdRoute
+  PersonPersonIdRoute: typeof PersonPersonIdRoute
+  TvIndexRoute: typeof TvIndexRoute
+  TvTvIdIndexRoute: typeof TvTvIdIndexRoute
+  TvTvIdSeasonSeasonNumberRoute: typeof TvTvIdSeasonSeasonNumberRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +183,91 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/discover': {
+      id: '/discover'
+      path: '/discover'
+      fullPath: '/discover'
+      preLoaderRoute: typeof DiscoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/movies': {
+      id: '/movies'
+      path: '/movies'
+      fullPath: '/movies'
+      preLoaderRoute: typeof MoviesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/watchlist': {
+      id: '/watchlist'
+      path: '/watchlist'
+      fullPath: '/watchlist'
+      preLoaderRoute: typeof WatchlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/movie/$movieId': {
+      id: '/movie/$movieId'
+      path: '/movie/$movieId'
+      fullPath: '/movie/$movieId'
+      preLoaderRoute: typeof MovieMovieIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/person/$personId': {
+      id: '/person/$personId'
+      path: '/person/$personId'
+      fullPath: '/person/$personId'
+      preLoaderRoute: typeof PersonPersonIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tv/': {
+      id: '/tv/'
+      path: '/tv'
+      fullPath: '/tv/'
+      preLoaderRoute: typeof TvIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tv/$tvId/': {
+      id: '/tv/$tvId/'
+      path: '/tv/$tvId'
+      fullPath: '/tv/$tvId/'
+      preLoaderRoute: typeof TvTvIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tv/$tvId/season/$seasonNumber': {
+      id: '/tv/$tvId/season/$seasonNumber'
+      path: '/tv/$tvId/season/$seasonNumber'
+      fullPath: '/tv/$tvId/season/$seasonNumber'
+      preLoaderRoute: typeof TvTvIdSeasonSeasonNumberRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  DiscoverRoute: DiscoverRoute,
+  MoviesRoute: MoviesRoute,
+  SearchRoute: SearchRoute,
+  WatchlistRoute: WatchlistRoute,
+  MovieMovieIdRoute: MovieMovieIdRoute,
+  PersonPersonIdRoute: PersonPersonIdRoute,
+  TvIndexRoute: TvIndexRoute,
+  TvTvIdIndexRoute: TvTvIdIndexRoute,
+  TvTvIdSeasonSeasonNumberRoute: TvTvIdSeasonSeasonNumberRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
