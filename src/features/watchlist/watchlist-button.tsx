@@ -1,9 +1,8 @@
 import { Bookmark, BookmarkCheck } from "lucide-react";
 import type { MouseEvent } from "react";
 
+import { toggleSaved, useWatchlist } from "#/features/watchlist/store.ts";
 import type { MediaSummary } from "#/types/media.ts";
-
-import { toggleSaved, useWatchlist } from "./store";
 
 type WatchlistMedia = Pick<
 	MediaSummary,
@@ -26,8 +25,10 @@ export const WatchlistButton = ({
 	variant?: "icon" | "full";
 	className?: string;
 }) => {
-	const { isSaved } = useWatchlist();
-	const saved = isSaved(media.mediaType, media.id);
+	const { items } = useWatchlist();
+	const saved = items.some(
+		(item) => item.mediaType === media.mediaType && item.id === media.id
+	);
 	const label = saved
 		? `Remove ${media.title} from watchlist`
 		: `Save ${media.title} to watchlist`;
