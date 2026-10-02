@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 import { buttonVariants } from "#/components/ui/button.tsx";
 import {
@@ -58,7 +59,10 @@ export const PaginationNav = ({
 								<Link
 									className={buttonVariants({ size: "default" })}
 									to={hrefForPage(page - 1)}
-								/>
+								>
+									<ChevronLeftIcon className="sm:-ms-1" />
+									<span className="max-sm:hidden">Previous</span>
+								</Link>
 							}
 						/>
 					</PaginationItem>
@@ -94,7 +98,10 @@ export const PaginationNav = ({
 								<Link
 									className={buttonVariants({ size: "default" })}
 									to={hrefForPage(page + 1)}
-								/>
+								>
+									<span className="max-sm:hidden">Next</span>
+									<ChevronRightIcon className="sm:-me-1" />
+								</Link>
 							}
 						/>
 					</PaginationItem>
