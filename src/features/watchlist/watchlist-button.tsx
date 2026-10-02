@@ -37,7 +37,7 @@ export const WatchlistButton = ({
 	if (variant === "full") {
 		return (
 			<button
-				aria-pressed={saved}
+				aria-label={label}
 				className={className}
 				onClick={(event) => {
 					onToggle(event, media);
