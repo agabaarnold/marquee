@@ -4,7 +4,9 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
 	resolve: {
-		alias: [{ find: "#", replacement: path.resolve(import.meta.dirname, "src") }],
+		alias: [
+			{ find: "#", replacement: path.resolve(import.meta.dirname, "src") },
+		],
 	},
 	test: {
 		environment: "jsdom",
