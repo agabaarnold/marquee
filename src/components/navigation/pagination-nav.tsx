@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { cn } from "cn";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 import { buttonVariants } from "#/components/ui/button.tsx";
 import {
