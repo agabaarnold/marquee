@@ -16,6 +16,7 @@ import {
 import { imageUrl } from "#/lib/images.ts";
 import { mediaPath } from "#/lib/slug.ts";
 import { useWatchlist } from "#/features/watchlist/store.ts";
+import type { MediaType } from "#/schemas/common.ts";
 import type { WatchlistItem } from "#/schemas/watchlist.ts";
 
 const watchlistSearch = z.object({
@@ -118,13 +119,25 @@ function WatchlistRow({ item }: { item: WatchlistItem }) {
 	);
 }
 
+const matchesFilters = (
+	item: WatchlistItem,
+	filter: "all" | MediaType,
+	status: "all" | NonNullable<WatchlistItem["status"]>
+): boolean => {
+	if (filter !== "all" && item.mediaType !== filter) {
+		return false;
+	}
+	if (status !== "all" && (item.status ?? "planned") !== status) {
+		return false;
+	}
+	return true;
+};
+
 function WatchlistPage() {
 	const search = Route.useSearch();
 	const { items } = useWatchlist();
-	const visible = items.filter(
-		(item) =>
-			(search.filter === "all" || item.mediaType === search.filter) &&
-			(search.status === "all" || (item.status ?? "planned") === search.status)
+	const visible = items.filter((item) =>
+		matchesFilters(item, search.filter, search.status)
 	);
 
 	return (
