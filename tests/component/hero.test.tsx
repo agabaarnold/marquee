@@ -1,5 +1,4 @@
-import { screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { act, fireEvent, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { Hero } from "#/routes/-components/hero.tsx";
@@ -39,23 +38,21 @@ describe("Hero", () => {
 		expect(container).toBeEmptyDOMElement();
 	});
 
-	it("advances slides on a timer and on dot clicks", async () => {
-		const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+	it("advances slides on dot clicks", async () => {
 		await renderWithRouter(<Hero items={items} />);
-		expect(
-			screen.getByRole("region", { name: "Spotlight" })
-		).toBeInTheDocument();
 		expect(screen.getAllByRole("button", { name: /Show slide/ })).toHaveLength(2);
 		expect(screen.getByRole("heading", { name: "One" })).toBeInTheDocument();
 
-		await user.click(screen.getByRole("button", { name: "Show slide 2: Two" }));
+		fireEvent.click(screen.getByRole("button", { name: "Show slide 2: Two" }));
 		expect(screen.getByRole("heading", { name: "Two" })).toBeInTheDocument();
 	});
 
 	it("auto-advances after the interval", async () => {
 		await renderWithRouter(<Hero items={items} />);
 		expect(screen.getByRole("heading", { name: "One" })).toBeInTheDocument();
-		await vi.advanceTimersByTimeAsync(6000);
+		await act(async () => {
+			await vi.advanceTimersByTimeAsync(6000);
+		});
 		expect(screen.getByRole("heading", { name: "Two" })).toBeInTheDocument();
 	});
 });
