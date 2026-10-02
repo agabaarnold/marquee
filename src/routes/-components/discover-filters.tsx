@@ -1,16 +1,14 @@
-import { useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
 import type { ReactNode } from "react";
 
-import { Skeleton } from "#/components/ui/skeleton.tsx";
 import { Input } from "#/components/ui/input.tsx";
-import {
-	segmentedControlItemVariants,
-} from "#/lib/segmented-control.ts";
+import { Skeleton } from "#/components/ui/skeleton.tsx";
+import { segmentedControlItemVariants } from "#/lib/segmented-control.ts";
 import { genresQuery, providersQuery } from "#/queries/media.ts";
-import type { DiscoverSearch } from "#/schemas/discover.ts";
 import type { MediaType } from "#/schemas/common.ts";
+import type { DiscoverSearch } from "#/schemas/discover.ts";
 
 type SearchUpdater = (previous: DiscoverSearch) => DiscoverSearch;
 
@@ -34,7 +32,9 @@ export const FilterChip = ({
 );
 
 const toggleId = (active: number[], id: number): number[] =>
-	active.includes(id) ? active.filter((value) => value !== id) : [...active, id];
+	active.includes(id)
+		? active.filter((value) => value !== id)
+		: [...active, id];
 
 export const FilterSkeleton = ({ label }: { label: string }) => (
 	<fieldset>
@@ -74,12 +74,13 @@ export const DiscoverGenres = ({
 	active: number[];
 }) => {
 	const { data: genres } = useSuspenseQuery(genresQuery(mediaType));
+	const activeSet = new Set(active);
 	return (
 		<FilterGroup label="Genres">
 			{genres.map((genre) => (
 				<FilterChip
 					key={genre.id}
-					active={active.includes(genre.id)}
+					active={activeSet.has(genre.id)}
 					search={(previous) => ({
 						...previous,
 						genres: toggleId(active, genre.id),
@@ -103,12 +104,13 @@ export const DiscoverProviders = ({
 	active: number[];
 }) => {
 	const { data } = useSuspenseQuery(providersQuery(mediaType, region));
+	const activeSet = new Set(active);
 	return (
 		<FilterGroup label="Streaming providers">
 			{data.results.map((provider) => (
 				<FilterChip
 					key={provider.id}
-					active={active.includes(provider.id)}
+					active={activeSet.has(provider.id)}
 					search={(previous) => ({
 						...previous,
 						providers: toggleId(active, provider.id),
@@ -140,7 +142,9 @@ export const DiscoverYears = ({
 	to?: number;
 	onApply: (years: { yearFrom?: number; yearTo?: number }) => void;
 }) => {
-	const [fromDraft, setFromDraft] = useState(from === undefined ? "" : `${from}`);
+	const [fromDraft, setFromDraft] = useState(
+		from === undefined ? "" : `${from}`
+	);
 	const [toDraft, setToDraft] = useState(to === undefined ? "" : `${to}`);
 	return (
 		<form
