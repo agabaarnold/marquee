@@ -2,6 +2,9 @@
 // Edge cases covered: null vs "" dates/paths, missing runtime,
 // malformed credit rows, empty homepage, non-US certifications.
 
+const AIR_DATE = "2008-01-20";
+const PERSON_NAME = "Edward Norton";
+
 export const movieSummary = {
 	id: 550,
 	title: "Fight Club",
@@ -11,7 +14,7 @@ export const movieSummary = {
 	backdrop_path: "/hZkgoQYus5vegHoetLkCJzb17zJ.jpg",
 	release_date: "1999-10-15",
 	vote_average: 8.4,
-	vote_count: 28000,
+	vote_count: 28_000,
 	popularity: 61.4,
 	genre_ids: [18],
 	original_language: "en",
@@ -32,9 +35,9 @@ export const tvSummary = {
 	overview: "A chemistry teacher...",
 	poster_path: "/ggFHVNu6YYI5L9pCfOacjizRGt.jpg",
 	backdrop_path: "/tsRy63Mu5cu8etL1X7ZLyf7UP1M.jpg",
-	first_air_date: "2008-01-20",
+	first_air_date: AIR_DATE,
 	vote_average: 8.9,
-	vote_count: 15000,
+	vote_count: 15_000,
 	popularity: 120.5,
 	genre_ids: [18, 80],
 	original_language: "en",
@@ -46,18 +49,23 @@ export const movieDetails = {
 	runtime: 139,
 	status: "Released",
 	homepage: "",
-	budget: 63000000,
-	revenue: 10092709,
+	budget: 63_000_000,
+	revenue: 10_092_709,
 	genres: [{ id: 18, name: "Drama" }],
 	belongs_to_collection: null,
 	production_companies: [
-		{ id: 508, name: "Regency Enterprises", logo_path: null, origin_country: "US" },
+		{
+			id: 508,
+			name: "Regency Enterprises",
+			logo_path: null,
+			origin_country: "US",
+		},
 	],
 	credits: {
 		cast: [
 			{
 				id: 819,
-				name: "Edward Norton",
+				name: PERSON_NAME,
 				character: "The Narrator",
 				profile_path: null,
 				order: 0,
@@ -165,7 +173,7 @@ export const tvDetails = {
 			season_number: 1,
 			name: "Season 1",
 			overview: "",
-			air_date: "2008-01-20",
+			air_date: AIR_DATE,
 			episode_count: 7,
 			poster_path: null,
 			vote_average: 8.2,
@@ -179,7 +187,7 @@ export const tvDetails = {
 	aggregate_credits: {
 		cast: [
 			{
-				id: 17419,
+				id: 17_419,
 				name: "Bryan Cranston",
 				profile_path: null,
 				order: 0,
@@ -236,7 +244,7 @@ export const seasonDetails = {
 	season_number: 1,
 	name: "Season 1",
 	overview: "",
-	air_date: "2008-01-20",
+	air_date: AIR_DATE,
 	episode_count: 7,
 	poster_path: null,
 	vote_average: 8.2,
@@ -247,10 +255,10 @@ export const seasonDetails = {
 			episode_number: 1,
 			name: "Pilot",
 			overview: "",
-			air_date: "2008-01-20",
+			air_date: AIR_DATE,
 			runtime: 58,
 			still_path: null,
-			vote_average: 8.0,
+			vote_average: 8,
 			vote_count: 300,
 		},
 	],
@@ -258,7 +266,7 @@ export const seasonDetails = {
 
 export const personDetails = {
 	id: 819,
-	name: "Edward Norton",
+	name: PERSON_NAME,
 	biography: "An American actor...",
 	birthday: "1969-08-18",
 	deathday: null,
@@ -305,14 +313,14 @@ export const trendingPage = {
 		{
 			media_type: "person",
 			id: 819,
-			name: "Edward Norton",
+			name: PERSON_NAME,
 			profile_path: null,
 			known_for_department: "Acting",
 		},
 		{ media_type: "movie", id: "bad" },
 	],
 	total_pages: 1000,
-	total_results: 20000,
+	total_results: 20_000,
 };
 
 export const searchMultiPage = {
@@ -322,7 +330,7 @@ export const searchMultiPage = {
 		{
 			media_type: "person",
 			id: 819,
-			name: "Edward Norton",
+			name: PERSON_NAME,
 			profile_path: null,
 			known_for_department: "Acting",
 		},
@@ -333,12 +341,9 @@ export const searchMultiPage = {
 
 export const discoverPage = {
 	page: 2,
-	results: [
-		movieSummary,
-		{ ...movieSummary, id: 551, title: "Second Title" },
-	],
+	results: [movieSummary, { ...movieSummary, id: 551, title: "Second Title" }],
 	total_pages: 500,
-	total_results: 10000,
+	total_results: 10_000,
 };
 
 export const providersList = {
