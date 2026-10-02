@@ -123,6 +123,7 @@ function DiscoverPage() {
 					</Suspense>
 
 					<DiscoverYears
+						key={`${search.yearFrom ?? ""}-${search.yearTo ?? ""}`}
 						from={search.yearFrom}
 						onApply={(years) => {
 							void navigate({
