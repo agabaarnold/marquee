@@ -30,7 +30,6 @@ export const GenreChips = ({
 						<Badge
 							render={
 								<Link
-									// @ts-expect-error -- /discover isn't registered yet, so its search params aren't in the router's closed search union; remove this once the route lands (it will then error as unused).
 									search={{ genres: [genre.id], type: mediaType }}
 									to={pathname}
 								>
