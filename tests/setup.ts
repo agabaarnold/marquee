@@ -1,4 +1,12 @@
 import "@testing-library/jest-dom/vitest";
+import { cleanup } from "@testing-library/react";
+import { afterEach } from "vitest";
+
+// Without globals:true, RTL auto-cleanup never installs; without this,
+// renders accumulate across tests in a file and role queries go ambiguous.
+afterEach(() => {
+	cleanup();
+});
 
 // jsdom has no matchMedia; components reading the OS theme need a stub.
 const matchMediaStub = (matches: boolean) => ({
