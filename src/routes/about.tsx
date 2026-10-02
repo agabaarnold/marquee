@@ -34,10 +34,10 @@ function AboutPage() {
 					Everything on screen.
 				</h1>
 				<p className="text-muted-foreground">
-					Marquee is a fast, cinematic discovery site for movies and TV
-					series: browse what&apos;s trending, explore by genre and filters,
-					read rich detail pages, search everything, and keep a local
-					watchlist. It is a personal, non-commercial project.
+					Marquee is a fast, cinematic discovery site for movies and TV series:
+					browse what&apos;s trending, explore by genre and filters, read rich
+					detail pages, search everything, and keep a local watchlist. It is a
+					personal, non-commercial project.
 				</p>
 			</div>
 
