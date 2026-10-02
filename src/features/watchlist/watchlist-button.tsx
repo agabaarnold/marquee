@@ -1,8 +1,9 @@
 import { Bookmark, BookmarkCheck } from "lucide-react";
 import type { MouseEvent } from "react";
 
-import { toggleSaved, useWatchlist } from "./store";
 import type { MediaSummary } from "#/types/media.ts";
+
+import { toggleSaved, useWatchlist } from "./store";
 
 type WatchlistMedia = Pick<
 	MediaSummary,
