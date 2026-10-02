@@ -90,6 +90,20 @@ describe("watchlist store", () => {
 		expect(result.current.items).toEqual([]);
 	});
 
+	it("keeps the first backup when corruption repeats", async () => {
+		window.localStorage.setItem(
+			"marquee:watchlist:backup",
+			"original-corrupt{{{"
+		);
+		window.localStorage.setItem("marquee:watchlist:v1", "new-corrupt{{{");
+		const store = await loadStore();
+		const { result } = renderHook(() => store.useWatchlist());
+		expect(result.current.items).toEqual([]);
+		expect(window.localStorage.getItem("marquee:watchlist:backup")).toBe(
+			"original-corrupt{{{"
+		);
+	});
+
 	it("syncs across tabs via storage events", async () => {
 		const store = await loadStore();
 		const { result } = renderHook(() => store.useWatchlist());
@@ -113,5 +127,17 @@ describe("watchlist store", () => {
 			);
 		});
 		expect(result.current.count).toBe(1);
+	});
+
+	it("drops stale items when another tab clears storage", async () => {
+		const store = await loadStore();
+		store.toggleSaved(item);
+		const { result } = renderHook(() => store.useWatchlist());
+		expect(result.current.count).toBe(1);
+		window.localStorage.clear();
+		act(() => {
+			window.dispatchEvent(new StorageEvent("storage", { key: null }));
+		});
+		expect(result.current.items).toEqual([]);
 	});
 });
