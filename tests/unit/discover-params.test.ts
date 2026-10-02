@@ -1,15 +1,16 @@
 import { describe, expect, it } from "vitest";
 
 import { toDiscoverParams } from "#/schemas/discover.ts";
+import type { DiscoverSearch } from "#/schemas/discover.ts";
 
-const base = {
+const base: DiscoverSearch = {
 	type: "movie",
 	genres: [],
 	minRating: 0,
 	sort: "popularity.desc",
 	providers: [],
 	page: 1,
-} as const;
+};
 
 describe("toDiscoverParams", () => {
 	it("maps movie filters to TMDB names", () => {
