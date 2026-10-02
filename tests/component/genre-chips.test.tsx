@@ -2,6 +2,7 @@ import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { GenreChips } from "#/components/media/genre-chips.tsx";
+
 import { renderWithRouter } from "./router";
 
 const genres = [
