@@ -13,7 +13,10 @@ describe("GenreChips", () => {
 	it("renders linked chips", async () => {
 		await renderWithRouter(<GenreChips genres={genres} mediaType="movie" />);
 		const action = screen.getByRole("link", { name: "Action" });
-		expect(action).toHaveAttribute("href", "/discover?type=movie&genres=28");
+		expect(action).toHaveAttribute(
+			"href",
+			"/discover?genres=%5B28%5D&type=movie"
+		);
 	});
 
 	it("renders nothing for an empty list or a zero limit", async () => {
