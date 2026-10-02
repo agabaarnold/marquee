@@ -8,6 +8,7 @@ import {
 	TvSummarySchema,
 	toSeasonDetails,
 } from "#/schemas/tv.ts";
+
 import { seasonDetails, tvDetails, tvSummary } from "../fixtures/tmdb";
 
 describe("TvSummarySchema", () => {
@@ -49,7 +50,9 @@ describe("TvDetailsSchema", () => {
 		expect(details.creators).toEqual([
 			{ id: 1, name: "Vince Gilligan", profilePath: null },
 		]);
-		expect(details.networks).toEqual([{ id: 174, name: "AMC", logoPath: null }]);
+		expect(details.networks).toEqual([
+			{ id: 174, name: "AMC", logoPath: null },
+		]);
 		expect(details.keywords).toEqual([{ id: 2, name: "drugs" }]);
 		expect(details.lastEpisodeToAir).toMatchObject({ name: "Felina" });
 		expect(details.nextEpisodeToAir).toBeNull();
