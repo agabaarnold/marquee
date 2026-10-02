@@ -37,8 +37,8 @@ function WatchlistPage() {
 				<EmptyHeader>
 					<EmptyTitle>Nothing saved yet</EmptyTitle>
 					<EmptyDescription>
-						Your watchlist will live here, stored privately in this browser.
-						The local-first store is still on the roadmap.
+						Your watchlist will live here, stored privately in this browser. The
+						local-first store is still on the roadmap.
 					</EmptyDescription>
 				</EmptyHeader>
 			</Empty>
