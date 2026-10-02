@@ -1,6 +1,11 @@
 // oxlint-disable react/function-component-definition func-style
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Link, createFileRoute, notFound, redirect } from "@tanstack/react-router";
+import {
+	Link,
+	createFileRoute,
+	notFound,
+	redirect,
+} from "@tanstack/react-router";
 
 import { Skeleton } from "#/components/ui/skeleton.tsx";
 import { imageUrl } from "#/lib/images.ts";
@@ -137,11 +142,13 @@ function SeasonPage() {
 								className={
 									current
 										? "bg-primary text-primary-foreground rounded-full px-4 py-1.5 text-sm font-medium"
-										: "text-muted-foreground hover:text-foreground rounded-full border border-border px-4 py-1.5 text-sm"
+										: "text-muted-foreground hover:text-foreground border-border rounded-full border px-4 py-1.5 text-sm"
 								}
 								to={href}
 							>
-								{item.seasonNumber === 0 ? "Specials" : `Season ${item.seasonNumber}`}
+								{item.seasonNumber === 0
+									? "Specials"
+									: `Season ${item.seasonNumber}`}
 							</Link>
 						);
 					})}
@@ -189,7 +196,9 @@ function SeasonPage() {
 											{episode.runtimeMinutes !== null && (
 												<span>{episode.runtimeMinutes} min</span>
 											)}
-											{episode.rating > 0 && <span>★ {episode.rating.toFixed(1)}</span>}
+											{episode.rating > 0 && (
+												<span>★ {episode.rating.toFixed(1)}</span>
+											)}
 										</div>
 										{episode.overview && (
 											<p className="text-muted-foreground line-clamp-3 text-sm">
