@@ -66,13 +66,6 @@ function PersonPending() {
 const byYearDesc = (a: PersonCredit, b: PersonCredit): number =>
 	(b.year ?? 0) - (a.year ?? 0);
 
-const initialsOf = (name: string): string =>
-	name
-		.split(" ")
-		.map((part) => part[0] ?? "")
-		.slice(0, 2)
-		.join("");
-
 function PersonPage() {
 	const { personId } = Route.useParams();
 	const { id } = IdSlugParam.parse(personId);
