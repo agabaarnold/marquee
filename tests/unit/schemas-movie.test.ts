@@ -1,7 +1,12 @@
 import { describe, expect, it } from "vitest";
 
 import { MovieDetailsSchema, MovieSummarySchema } from "#/schemas/movie.ts";
-import { movieDetails, movieSummary, movieSummarySparse } from "../fixtures/tmdb";
+
+import {
+	movieDetails,
+	movieSummary,
+	movieSummarySparse,
+} from "../fixtures/tmdb";
 
 describe("MovieSummarySchema", () => {
 	it("normalizes a movie row to MediaSummary", () => {
@@ -15,7 +20,7 @@ describe("MovieSummarySchema", () => {
 			date: "1999-10-15",
 			year: 1999,
 			rating: 8.4,
-			voteCount: 28000,
+			voteCount: 28_000,
 			genreIds: [18],
 			originalLanguage: "en",
 		});
@@ -39,7 +44,7 @@ describe("MovieDetailsSchema", () => {
 		expect(details.status).toBe("Released");
 		// Empty homepage normalizes to null.
 		expect(details.homepage).toBeNull();
-		expect(details.budget).toBe(63000000);
+		expect(details.budget).toBe(63_000_000);
 		expect(details.collection).toBeNull();
 		expect(details.productionCompanies).toHaveLength(1);
 		expect(details.productionCompanies[0]).toMatchObject({
