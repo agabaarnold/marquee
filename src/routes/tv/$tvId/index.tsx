@@ -1,17 +1,22 @@
 // oxlint-disable react/function-component-definition func-style
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Link, createFileRoute, notFound, redirect } from "@tanstack/react-router";
+import {
+	Link,
+	createFileRoute,
+	notFound,
+	redirect,
+} from "@tanstack/react-router";
 
 import { GenreChips } from "#/components/media/genre-chips.tsx";
 import { MediaRail } from "#/components/media/media-rail.tsx";
 import { MediaTypeBadge } from "#/components/media/media-type-badge.tsx";
 import { RatingRing } from "#/components/media/rating-ring.tsx";
-import { Skeleton } from "#/components/ui/skeleton.tsx";
 import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
 } from "#/components/ui/avatar.tsx";
+import { Skeleton } from "#/components/ui/skeleton.tsx";
 import { imageUrl } from "#/lib/images.ts";
 import { mediaSlugParam, slugify } from "#/lib/slug.ts";
 import { tvQuery } from "#/queries/media.ts";
@@ -53,7 +58,11 @@ export const Route = createFileRoute("/tv/$tvId/")({
 			: undefined;
 		return {
 			meta: [
-				{ title: loaderData ? `${loaderData.title} · Marquee` : "Series · Marquee" },
+				{
+					title: loaderData
+						? `${loaderData.title} · Marquee`
+						: "Series · Marquee",
+				},
 				...(loaderData?.description
 					? [{ name: "description", content: loaderData.description }]
 					: []),
@@ -135,7 +144,7 @@ function SeasonCard({
 	const poster = imageUrl(season.posterPath, 185);
 	return (
 		<Link
-			className="poster-card group block overflow-hidden rounded-xl border border-border bg-card"
+			className="poster-card group border-border bg-card block overflow-hidden rounded-xl border"
 			params={{ seasonNumber: `${season.seasonNumber}`, tvId: showSlug }}
 			to="/tv/$tvId/season/$seasonNumber"
 		>
@@ -174,36 +183,48 @@ function TvPage() {
 	const creators = show.creators.map((person) => person.name).join(", ");
 	const networks = show.networks.map((network) => network.name).join(", ");
 	const showSlug = mediaSlugParam(show);
+	const titleTone = backdrop ? "text-white" : "text-foreground";
+	const dimTone = backdrop ? "text-white/70" : "text-muted-foreground";
+	const bodyTone = backdrop ? "text-white/90" : undefined;
 
 	return (
 		<div className="marquee-container page-transition space-y-8 py-8">
-			<section aria-label={show.title} className="space-y-6">
+			<section
+				aria-label={show.title}
+				className="relative overflow-hidden rounded-xl"
+			>
 				{backdrop && (
-					<div className="overflow-hidden rounded-xl">
-						<img
-							alt=""
-							className="aspect-video w-full object-cover"
-							src={backdrop}
-						/>
-					</div>
+					<img
+						alt=""
+						className="absolute inset-0 size-full object-cover"
+						src={backdrop}
+					/>
 				)}
-				<div className="flex flex-col gap-6 sm:flex-row">
+				{backdrop && (
+					<div
+						aria-hidden="true"
+						className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/25"
+					/>
+				)}
+				<div className="relative flex flex-col gap-6 p-6 sm:flex-row sm:p-8">
 					{poster && (
 						<img
 							alt={`Poster for ${show.title}`}
-							className="poster w-40 shrink-0 sm:w-52"
+							className="poster w-40 shrink-0 shadow-2xl sm:w-52"
 							src={poster}
 						/>
 					)}
 					<div className="min-w-0 flex-1 space-y-3">
 						<MediaTypeBadge mediaType="tv" />
-						<h1 className="font-heading text-foreground text-3xl sm:text-4xl">
+						<h1 className={`font-heading text-3xl sm:text-4xl ${titleTone}`}>
 							{show.title}
 						</h1>
 						{show.tagline && (
-							<p className="text-muted-foreground italic">{show.tagline}</p>
+							<p className={`${dimTone} italic`}>{show.tagline}</p>
 						)}
-						<div className="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+						<div
+							className={`${dimTone} flex flex-wrap items-center gap-x-3 gap-y-1 text-sm`}
+						>
 							{show.year && <span>{show.year}</span>}
 							<span>
 								{show.numberOfSeasons}{" "}
@@ -213,17 +234,17 @@ function TvPage() {
 							{show.certification && <span>{show.certification}</span>}
 							<RatingRing value={show.rating} votes={show.voteCount} />
 						</div>
-						{show.overview && <p>{show.overview}</p>}
+						{show.overview && <p className={bodyTone}>{show.overview}</p>}
 						{creators && (
 							<p className="text-sm">
-								<span className="text-muted-foreground">Created by </span>
-								{creators}
+								<span className={dimTone}>Created by </span>
+								<span className={bodyTone}>{creators}</span>
 							</p>
 						)}
 						{networks && (
 							<p className="text-sm">
-								<span className="text-muted-foreground">Networks </span>
-								{networks}
+								<span className={dimTone}>Networks </span>
+								<span className={bodyTone}>{networks}</span>
 							</p>
 						)}
 						<GenreChips genres={show.genres} mediaType="tv" />
@@ -263,11 +284,8 @@ function TvPage() {
 					<h2 className="font-heading text-foreground text-xl">Seasons</h2>
 					<div className="poster-grid">
 						{show.seasons.map((season) => (
-						<SeasonCard
-								key={season.id}
-								season={season}
-								showSlug={showSlug}
-							/>						))}
+							<SeasonCard key={season.id} season={season} showSlug={showSlug} />
+						))}
 					</div>
 				</section>
 			)}
