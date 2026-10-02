@@ -42,7 +42,7 @@ describe("watchlist store", () => {
 			status: "planned",
 			title: "Fight Club",
 		});
-		expect(typeof result.current.items[0]?.addedAt).toBe("string");
+		expect(result.current.items[0]?.addedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
 
 		act(() => {
 			result.current.toggle(item);
