@@ -37,7 +37,7 @@ const server = setupServer();
 beforeAll(() => {
 	// Fail on unmatched requests: the default "warn" would let a missing
 	// handler reach the real TMDB API with dummy credentials.
-	server.listen({ onUnhandledRequest: "error" });
+	server.listen({ onUnhandledFrame: "error" });
 });
 afterEach(() => {
 	server.resetHandlers();
