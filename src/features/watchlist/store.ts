@@ -75,7 +75,6 @@ const persist = (state: StoredState): void => {
 let snapshot: StoredState | null = null;
 const listeners = new Set<() => void>();
 
-let snapshotReads = 0;
 const getSnapshot = (): StoredState => {
 	if (snapshot === null) {
 		snapshot = readStored();
