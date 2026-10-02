@@ -12,8 +12,7 @@ const media = {
 	year: 1999,
 } as const;
 
-const loadButton = () =>
-	import("#/features/watchlist/watchlist-button.tsx");
+const loadButton = () => import("#/features/watchlist/watchlist-button.tsx");
 
 beforeEach(() => {
 	vi.resetModules();
