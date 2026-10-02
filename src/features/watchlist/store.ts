@@ -75,9 +75,15 @@ const persist = (state: StoredState): void => {
 let snapshot: StoredState | null = null;
 const listeners = new Set<() => void>();
 
+let snapshotReads = 0;
 const getSnapshot = (): StoredState => {
 	if (snapshot === null) {
 		snapshot = readStored();
+	}
+	// eslint-disable-next-line no-console -- temporary e2e debug probe
+	if (snapshotReads < 30) {
+		snapshotReads += 1;
+		console.log("[watchlist] getSnapshot items:", snapshot.items.length);
 	}
 	return snapshot;
 };
@@ -97,7 +103,7 @@ const commit = (next: StoredState): void => {
 	snapshot = next;
 	persist(next);
 	// eslint-disable-next-line no-console -- temporary e2e debug probe
-	console.log("[watchlist] commit, listeners:", listeners.size);
+	console.log("[watchlist] commit items:", next.items.length, "listeners:", listeners.size);
 	for (const listener of listeners) {
 		listener();
 	}
