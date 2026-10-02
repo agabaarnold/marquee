@@ -33,10 +33,10 @@ describe("PosterCard", () => {
 	});
 
 	it("falls back to a typographic placeholder without a poster", async () => {
-		await renderWithRouter(
+		const { container } = await renderWithRouter(
 			<PosterCard media={{ ...media, posterPath: null }} />
 		);
-		expect(screen.queryByRole("img")).not.toBeInTheDocument();
+		expect(container.querySelector("img")).not.toBeInTheDocument();
 		expect(
 			screen.getByText("Fight Club", { selector: "span" })
 		).toBeInTheDocument();
