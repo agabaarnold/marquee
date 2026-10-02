@@ -1,14 +1,14 @@
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 // oxlint-disable react/function-component-definition func-style
 import { Suspense, useState } from "react";
-import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 
+import { MediaGridSkeleton } from "#/components/media/media-grid-skeleton.tsx";
 import {
 	Empty,
 	EmptyDescription,
 	EmptyHeader,
 	EmptyTitle,
 } from "#/components/ui/empty.tsx";
-import { MediaGridSkeleton } from "#/components/media/media-grid-skeleton.tsx";
 import { Input } from "#/components/ui/input.tsx";
 import {
 	segmentedControlItemVariants,
@@ -16,6 +16,7 @@ import {
 } from "#/lib/segmented-control.ts";
 import { searchQuery } from "#/queries/search.ts";
 import { SearchPageSearch } from "#/schemas/discover.ts";
+
 import { SearchResults } from "./-components/search-results.tsx";
 
 const TYPES = [
@@ -29,12 +30,16 @@ export const Route = createFileRoute("/search")({
 	component: SearchPage,
 	validateSearch: SearchPageSearch,
 	loaderDeps: ({ search }) => search,
-	loader: async ({ context: { queryClient }, deps }) => {
+	loader: ({ context: { queryClient }, deps }) => {
 		if (!deps.q) {
 			return null;
 		}
 		return queryClient.query({
-			...searchQuery(deps.type === "all" ? "multi" : deps.type, deps.q, deps.page),
+			...searchQuery(
+				deps.type === "all" ? "multi" : deps.type,
+				deps.q,
+				deps.page
+			),
 			staleTime: "static",
 		});
 	},
