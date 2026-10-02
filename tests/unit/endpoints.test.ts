@@ -35,7 +35,9 @@ const BASE = "https://api.themoviedb.org/3";
 const server = setupServer();
 
 beforeAll(() => {
-	server.listen();
+	// Fail on unmatched requests: the default "warn" would let a missing
+	// handler reach the real TMDB API with dummy credentials.
+	server.listen({ onUnhandledRequest: "error" });
 });
 afterEach(() => {
 	server.resetHandlers();
