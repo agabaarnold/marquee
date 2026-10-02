@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { PosterCard } from "#/components/media/poster-card.tsx";
 import type { MediaSummary } from "#/types/media.ts";
+
 import { renderWithRouter } from "./router";
 
 const media: MediaSummary = {
@@ -16,7 +17,7 @@ const media: MediaSummary = {
 	date: "1999-10-15",
 	year: 1999,
 	rating: 8.4,
-	voteCount: 28000,
+	voteCount: 28_000,
 	popularity: 61,
 	genreIds: [18],
 	originalLanguage: "en",
@@ -44,6 +45,8 @@ describe("PosterCard", () => {
 
 	it("hides the rating ring when unrated", async () => {
 		await renderWithRouter(<PosterCard media={{ ...media, rating: 0 }} />);
-		expect(screen.queryByRole("img", { name: /out of 10/ })).not.toBeInTheDocument();
+		expect(
+			screen.queryByRole("img", { name: /out of 10/u })
+		).not.toBeInTheDocument();
 	});
 });
