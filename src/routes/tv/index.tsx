@@ -3,8 +3,8 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
-import { MediaGrid } from "#/components/media/media-grid.tsx";
 import { MediaGridSkeleton } from "#/components/media/media-grid-skeleton.tsx";
+import { MediaGrid } from "#/components/media/media-grid.tsx";
 import { PaginationNav } from "#/components/navigation/pagination-nav.tsx";
 import {
 	segmentedControlItemVariants,
