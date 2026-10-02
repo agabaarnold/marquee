@@ -32,24 +32,26 @@ const readStored = (): StoredState => {
 	if (typeof window === "undefined") {
 		return emptyState();
 	}
+	let raw: string | null = null;
 	try {
-		const raw = window.localStorage.getItem(STORAGE_KEY);
+		raw = window.localStorage.getItem(STORAGE_KEY);
 		if (!raw) {
 			return emptyState();
 		}
 		const parsed: unknown = JSON.parse(raw);
 		const result = WatchlistState.safeParse(parsed);
 		if (!result.success) {
+			throw new Error("Invalid watchlist data");
+		}
+		return result.data;
+	} catch {
+		if (raw) {
 			try {
 				window.localStorage.setItem(BACKUP_KEY, raw);
 			} catch {
 				// Backup failing must not block starting clean.
 			}
-			return emptyState();
 		}
-		return result.data;
-	} catch {
-		// Corrupt JSON or denied access: start clean.
 		return emptyState();
 	}
 };
