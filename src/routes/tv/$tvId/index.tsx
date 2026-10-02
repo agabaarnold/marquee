@@ -11,6 +11,7 @@ import { GenreChips } from "#/components/media/genre-chips.tsx";
 import { MediaRail } from "#/components/media/media-rail.tsx";
 import { MediaTypeBadge } from "#/components/media/media-type-badge.tsx";
 import { RatingRing } from "#/components/media/rating-ring.tsx";
+import { WatchlistButton } from "#/features/watchlist/watchlist-button.tsx";
 import {
 	Avatar,
 	AvatarFallback,
@@ -248,6 +249,13 @@ function TvPage() {
 							</p>
 						)}
 						<GenreChips genres={show.genres} mediaType="tv" />
+						<div>
+							<WatchlistButton
+								className="bg-primary text-primary-foreground inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium"
+								media={show}
+								variant="full"
+							/>
+						</div>
 					</div>
 				</div>
 			</section>
