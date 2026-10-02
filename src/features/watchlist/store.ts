@@ -32,6 +32,10 @@ interface StoredState {
 
 const emptyState = (): StoredState => ({ items: [], version: 1 });
 
+// Shared frozen snapshot for SSR: React requires getServerSnapshot to
+// return a cached value, otherwise hydration loops forever.
+const SERVER_SNAPSHOT: StoredState = { items: [], version: 1 };
+
 const readStored = (): StoredState => {
 	if (typeof window === "undefined") {
 		return emptyState();
@@ -78,7 +82,7 @@ const getSnapshot = (): StoredState => {
 	return snapshot;
 };
 
-const getServerSnapshot = (): StoredState => emptyState();
+const getServerSnapshot = (): StoredState => SERVER_SNAPSHOT;
 
 const subscribe = (listener: () => void): (() => void) => {
 	listeners.add(listener);
