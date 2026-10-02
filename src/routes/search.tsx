@@ -9,7 +9,6 @@ import {
 	EmptyHeader,
 	EmptyTitle,
 } from "#/components/ui/empty.tsx";
-import { Input } from "#/components/ui/input.tsx";
 import {
 	segmentedControlItemVariants,
 	segmentedControlRootClassName,
@@ -70,39 +69,11 @@ function SearchPending() {
 
 function SearchPage() {
 	const search = Route.useSearch();
-	const navigate = useNavigate({ from: "/search" });
-	const [draft, setDraft] = useState(search.q);
 
 	return (
 		<div className="marquee-container page-transition space-y-6 py-8">
 			<h1 className="font-heading text-foreground text-3xl">Search</h1>
-			<form
-				className="flex max-w-xl gap-2"
-				key={search.q}
-				onSubmit={(event) => {
-					event.preventDefault();
-					void navigate({
-						search: (previous) => ({ ...previous, page: 1, q: draft }),
-					});
-				}}
-			>
-				<Input
-					aria-label="Search movies, series, and people"
-					maxLength={100}
-					onChange={(event) => {
-						setDraft(event.target.value);
-					}}
-					placeholder="Titles, series, people…"
-					type="search"
-					value={draft}
-				/>
-				<button
-					className="bg-primary text-primary-foreground shrink-0 rounded-full px-5 py-2 text-sm font-medium"
-					type="submit"
-				>
-					Search
-				</button>
-			</form>
+			<SearchForm key={search.q} initialQuery={search.q} />
 			<fieldset className={segmentedControlRootClassName}>
 				<legend className="sr-only">Result type</legend>
 				{TYPES.map((option) => (
