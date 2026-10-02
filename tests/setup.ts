@@ -9,20 +9,26 @@ afterEach(() => {
 });
 
 // jsdom has no matchMedia; components reading the OS theme need a stub.
-const matchMediaStub = (matches: boolean) => ({
-	matches,
+// Skipped entirely under node (server-side test files).
+const noop = (): void => undefined;
+
+const matchMediaStub = () => ({
+	matches: false,
 	media: "",
-	addEventListener: () => {},
-	removeEventListener: () => {},
-	addListener: () => {},
-	removeListener: () => {},
+	addEventListener: noop,
+	removeEventListener: noop,
+	addListener: noop,
+	removeListener: noop,
 	dispatchEvent: () => false,
 	onchange: null,
 });
-Object.defineProperty(window, "matchMedia", {
-	value: () => matchMediaStub(false),
-	writable: true,
-});
+
+if (typeof window !== "undefined") {
+	Object.defineProperty(window, "matchMedia", {
+		value: matchMediaStub,
+		writable: true,
+	});
+}
 
 // Server env is parsed at module import time, and neither .env.local
 // (possibly empty values) nor Vitest's NODE_ENV=test satisfy its schema,
