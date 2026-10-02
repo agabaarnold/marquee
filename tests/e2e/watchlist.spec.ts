@@ -16,6 +16,6 @@ test("save from a detail page, header count, watchlist page, persistence", async
 	await page.reload();
 	await expect(page.getByText("Fight Club").first()).toBeVisible();
 
-	await page.getByRole("button", { name: /Remove Fight Club/ }).click();
+	await page.getByRole("button", { name: /Remove Fight Club/u }).click();
 	await expect(page.getByText("Nothing saved yet")).toBeVisible();
 });
