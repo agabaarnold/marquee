@@ -3,8 +3,8 @@ import { Link } from "@tanstack/react-router";
 import { Bookmark, Search } from "lucide-react";
 
 import { Logo } from "#/components/brand/logo.tsx";
-import { useWatchlist } from "#/features/watchlist/store.ts";
 import { ThemeToggle } from "#/features/theme/theme-toggle.tsx";
+import { useWatchlist } from "#/features/watchlist/store.ts";
 
 const NAV: { label: string; href: string }[] = [
 	{ label: "Movies", href: "/movies" },
